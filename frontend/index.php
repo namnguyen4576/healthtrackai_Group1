@@ -28,15 +28,7 @@
     <img src="assets/images/chat-image.jpg" alt="Chat Interface" class="full-image" />
     </section>
 
-    <section class="intro" id="about">
-      <h2>About Us</h2>
-      <p>Passionate about medicine. Caring for people.</p>
-    </section>
-
-    <section class="contact" id="contact">
-      <h2>Contact Us</h2>
-      <p>Address: HealthTrackAI, DHA Phase III Medical Center.</p>
-    </section>
+    
 
     <section class="login-admin" id="admin-login">
       <h2>Admin Login</h2>
@@ -71,6 +63,15 @@
         <button type="submit">LOGIN</button>
         <p>Not registered? <a href="register.php">Create an account</a></p>
       </form>
+    </section>
+    <section class="intro" id="about">
+      <h2>About Us</h2>
+      <p>Passionate about medicine. Caring for people.</p>
+    </section>
+
+    <section class="contact" id="contact">
+      <h2>Contact Us</h2>
+      <p>Address: HealthTrackAI, DHA Phase III Medical Center.</p>
     </section>
   </main>
 
