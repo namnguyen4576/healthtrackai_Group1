@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chatbox Interface</title>
+  <style>
+    /* Chatbox container styling */
+    .chatbox-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 350px;
+      height: 500px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header of the chatbox */
+    .chatbox-header {
+      background-color: #007bff;
+      color: #fff;
+      padding: 15px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    /* Chatbox body styling */
+    .chatbox-body {
+      flex: 1;
+      padding: 10px;
+      background-color: #f1f1f1;
+      overflow-y: auto;
+    }
+
+    /* Chatbox footer styling */
+    .chatbox-footer {
+      padding: 10px;
+      background-color: #ddd;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Input field styling */
+    .chatbox-footer input {
+      width: 80%;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    /* Send button styling */
+    .chatbox-footer button {
+      padding: 8px 15px;
+      border-radius: 5px;
+      border: none;
+      background-color: #007bff;
+      color: #fff;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+
+  <script src="https://app.tudongchat.com/js/chatbox.js"></script>
+  <script>
+    const tudong_chatbox = new TuDongChat('CyClSG4NxJEVI2oYs5AQF');
+    tudong_chatbox.initial();
+
+    function sendMessage() {
+      const userInput = document.getElementById('user-input');
+      const message = userInput.value.trim();
+
+      if (message) {
+        // Append the user's message to the chatbox
+        const chatboxBody = document.getElementById('chatbox-body');
+        const userMessage = document.createElement('div');
+        userMessage.textContent = "You: " + message;
+        chatboxBody.appendChild(userMessage);
+        userInput.value = '';
+
+        // TODO: Send the message to the chat service here
+      }
+    }
+  </script>
+</body>
+</html>

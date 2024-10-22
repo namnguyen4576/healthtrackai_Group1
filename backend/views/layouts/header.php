@@ -41,7 +41,7 @@ if (isset($_SESSION['user'])) {
 
                             <p>
                                 <?php echo $username . ' - ' . $jobs; ?>
-                                <!--Nguyễn Viết Mạnh - Web Developer-->
+                              
                                 <small>Thành viên từ năm <?php echo $year; ?></small>
                             </p>
                         </li>

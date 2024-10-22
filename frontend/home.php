@@ -18,7 +18,7 @@
         <li><a href="hospitals.php"><i class="fas fa-hospital"></i> HOSPITALS</a></li>
         <li><a href="doctors.php"><i class="fas fa-user-md"></i> DOCTORS</a></li>
         <li><a href="query.php"><i class="fas fa-comments"></i> QUERY</a></li>
-        <li><a href="index.php"><i class="fas fa-lock"></i> LOGOUT</a></li>
+        <li><a href="index.php" onclick="resetChat()"><i class="fas fa-lock"></i> LOGOUT</a></li>
       </ul>
     </nav>
   </header>
@@ -27,6 +27,18 @@
     <p>Welcome... !</p>
     <hr>
   </div>
+
+  <script src="https://app.tudongchat.com/js/chatbox.js"></script>
+  <script>
+    const tudong_chatbox = new TuDongChat('CyClSG4NxJEVI2oYs5AQF');
+    tudong_chatbox.initial();
+
+    function resetChat() {
+      // Reset chatbox and initialize it
+      tudong_chatbox.reset(); // Assuming there is a reset method available
+      tudong_chatbox.initial(); // Reinitialize chatbox after reset
+    }
+  </script>
 
 </body>
 
