@@ -17,7 +17,6 @@
         <li><a href="home.php"><i class="fas fa-home"></i> HOME</a></li>
         <li><a href="hospitals.php" class="<?= basename($_SERVER['PHP_SELF']) == 'hospitals.php' ? 'active' : '' ?>"><i class="fas fa-hospital"></i> HOSPITALS</a></li>
         <li><a href="doctors.php"><i class="fas fa-user-md"></i> DOCTORS</a></li>
-        <li><a href="query.php"><i class="fas fa-comments"></i> QUERY</a></li>
         <li><a href="index.php"><i class="fas fa-lock"></i> LOGOUT</a></li>
       </ul>
     </nav>

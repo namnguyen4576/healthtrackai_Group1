@@ -19,7 +19,6 @@ session_start(); // Bắt đầu phiên làm việc
         <li><a href="home.php" class="<?= basename($_SERVER['PHP_SELF']) == 'home.php' ? 'active' : '' ?>"><i class="fas fa-home"></i> HOME</a></li>
         <li><a href="hospitals.php"><i class="fas fa-hospital"></i> HOSPITALS</a></li>
         <li><a href="doctors.php"><i class="fas fa-user-md"></i> DOCTORS</a></li>
-        <li><a href="query.php"><i class="fas fa-comments"></i> QUERY</a></li>
         <li><a href="index.php" onclick="resetChat()"><i class="fas fa-lock"></i> LOGOUT</a></li>
       </ul>
     </nav>
