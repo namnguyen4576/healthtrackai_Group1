@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (!isset($_SESSION['user_name'])) {
+    header("Location: index.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,7 +31,7 @@
   </header>
 
   <div class="welcome-message">
-    <p>Welcome... !</p>
+    <p>Welcome, <?= htmlspecialchars($_SESSION['user_name']); ?>!</p>
     <hr>
   </div>
 

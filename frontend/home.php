@@ -1,9 +1,14 @@
 <?php
-session_start(); // Bắt đầu phiên làm việc
+session_start();
+if (!isset($_SESSION['user_name'])) {
+    header("Location: index.php");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +16,7 @@ session_start(); // Bắt đầu phiên làm việc
   <link rel="stylesheet" href="assets/css/home.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+
 <body>
   <header>
     <h1>HealthTrackAI</h1>
@@ -19,17 +25,13 @@ session_start(); // Bắt đầu phiên làm việc
         <li><a href="home.php" class="<?= basename($_SERVER['PHP_SELF']) == 'home.php' ? 'active' : '' ?>"><i class="fas fa-home"></i> HOME</a></li>
         <li><a href="hospitals.php"><i class="fas fa-hospital"></i> HOSPITALS</a></li>
         <li><a href="doctors.php"><i class="fas fa-user-md"></i> DOCTORS</a></li>
-        <li><a href="index.php" onclick="resetChat()"><i class="fas fa-lock"></i> LOGOUT</a></li>
+        <li><a href="index.php"><i class="fas fa-lock"></i> LOGOUT</a></li>
       </ul>
     </nav>
   </header>
 
   <div class="welcome-message">
-    <?php if (isset($_SESSION['user_name'])): ?>
-      <p>Welcome, <?= htmlspecialchars($_SESSION['user_name']); ?>!</p>
-    <?php else: ?>
-      <p>Welcome...!</p>
-    <?php endif; ?>
+    <p>Welcome, <?= htmlspecialchars($_SESSION['user_name']); ?>!</p>
     <hr>
   </div>
 
@@ -39,11 +41,11 @@ session_start(); // Bắt đầu phiên làm việc
     tudong_chatbox.initial();
 
     function resetChat() {
-      // Reset chatbox and initialize it
-      tudong_chatbox.reset(); // Assuming there is a reset method available
-      tudong_chatbox.initial(); // Reinitialize chatbox after reset
+      tudong_chatbox.reset(); 
+      tudong_chatbox.initial(); 
     }
   </script>
 
 </body>
+
 </html>
