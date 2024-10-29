@@ -1,6 +1,9 @@
+<?php
+session_start(); // Bắt đầu phiên làm việc
+?>
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +11,6 @@
   <link rel="stylesheet" href="assets/css/home.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-
 <body>
   <header>
     <h1>HealthTrackAI</h1>
@@ -24,7 +26,11 @@
   </header>
 
   <div class="welcome-message">
-    <p>Welcome... !</p>
+    <?php if (isset($_SESSION['user_name'])): ?>
+      <p>Welcome, <?= htmlspecialchars($_SESSION['user_name']); ?>!</p>
+    <?php else: ?>
+      <p>Welcome...!</p>
+    <?php endif; ?>
     <hr>
   </div>
 
@@ -41,5 +47,4 @@
   </script>
 
 </body>
-
 </html>
