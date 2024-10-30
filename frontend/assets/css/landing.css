@@ -1,0 +1,104 @@
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+header {
+    background-color: #4CAF50;
+    padding: 1rem;
+    text-align: center;
+}
+
+header h1 {
+    color: white;
+}
+
+header nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+header nav ul li {
+    display: inline;
+    margin-right: 1rem;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.hero {
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+.hero img {
+    width: 100%;
+    height: auto;
+    filter: brightness(0.6);
+}
+
+.hero-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.hero-text h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.hero-text p {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.cta-button {
+    background-color: #FF5733;
+    color: white;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.cta-button:hover {
+    background-color: #ff4500;
+}
+
+.features, .benefits, .about {
+    padding: 2rem;
+    text-align: center;
+}
+
+.features h2, .benefits h2, .about h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.feature-list, .benefit-list {
+    display: flex;
+    justify-content: space-around;
+}
+
+.feature, .benefit {
+    width: 30%;
+    text-align: left;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+}
