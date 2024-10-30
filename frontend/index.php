@@ -52,7 +52,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <header>
+<<<<<<< HEAD
     <h1><a href="landing.php" style="color: white; text-decoration: none;">HealthTrackAI</a></h1>
+=======
+        <h1>HealthTrackAI</h1>
+>>>>>>> 25ac0eae699d822327491e9cdd5d3e664862fa9c
         <nav>
             <ul>
                 <li><a href="#chat"><i class="fas fa-home"></i> HOME</a></li>

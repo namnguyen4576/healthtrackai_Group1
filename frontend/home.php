@@ -25,7 +25,10 @@ if (!isset($_SESSION['user_name'])) {
         <li><a href="home.php" class="<?= basename($_SERVER['PHP_SELF']) == 'home.php' ? 'active' : '' ?>"><i class="fas fa-home"></i> HOME</a></li>
         <li><a href="hospitals.php"><i class="fas fa-hospital"></i> HOSPITALS</a></li>
         <li><a href="doctors.php"><i class="fas fa-user-md"></i> DOCTORS</a></li>
+<<<<<<< HEAD
         <li><a href="profile.php" class="<?= basename($_SERVER['PHP_SELF']) == 'profile.php' ? 'active' : '' ?>"><i class="fas fa-user"></i> PROFILE</a></li> <!-- Thêm mục Profile -->
+=======
+>>>>>>> 25ac0eae699d822327491e9cdd5d3e664862fa9c
         <li><a href="index.php"><i class="fas fa-lock"></i> LOGOUT</a></li>
       </ul>
     </nav>
