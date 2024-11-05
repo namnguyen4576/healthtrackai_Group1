@@ -6,37 +6,54 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $email = $_POST['user-email'];
-    $password = $_POST['user-password'];
+    if (isset($_POST['user-email'])) {
+        // Xử lý đăng nhập của người dùng
+        $email = $_POST['user-email'];
+        $password = $_POST['user-password'];
 
-    // Kiểm tra người dùng trong cơ sở dữ liệu
-    $sql = "SELECT * FROM users WHERE email = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
+        // Kiểm tra người dùng trong cơ sở dữ liệu
+        $sql = "SELECT * FROM users WHERE email = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-    if ($result->num_rows > 0) {
-        $user = $result->fetch_assoc();
-        if (password_verify($password, $user['password'])) {
-            // Đăng nhập thành công
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['user_name'] = $user['name']; // Đảm bảo tên được lưu vào session
-            header("Location: home.php");
+        if ($result->num_rows > 0) {
+            $user = $result->fetch_assoc();
+            if (password_verify($password, $user['password'])) {
+                // Đăng nhập thành công cho người dùng
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['user_name'] = $user['name'];
+                header("Location: home.php"); // Chuyển đến trang người dùng
+                exit();
+            } else {
+                echo "<script>alert('Incorrect password for user. Please try again.');</script>";
+            }
+        } else {
+            echo "<script>alert('No user found with this email.');</script>";
+        }
+        $stmt->close();
+
+    } elseif (isset($_POST['admin_id'])) {
+        // Xử lý đăng nhập cho Admin với tài khoản cố định
+        $admin_id = $_POST['admin_id'];
+        $admin_password = $_POST['admin-password'];
+
+        // Kiểm tra thông tin admin với tài khoản cố định
+        if ($admin_id === 'admin' && $admin_password === '123') {
+            // Đăng nhập thành công cho Admin
+            $_SESSION['admin_id'] = 'admin';
+            $_SESSION['admin_username'] = $admin_id;
+            header("Location: admin.php"); // Chuyển đến trang Admin
             exit();
         } else {
-            // Thông báo mật khẩu không đúng
-            echo "<script>alert('Incorrect password. Please try again.');</script>";
+            echo "<script>alert('Incorrect admin credentials. Please try again.');</script>";
         }
-    } else {
-        // Thông báo không tìm thấy người dùng
-        echo "<script>alert('No user found with this email.');</script>";
     }
-
-    $stmt->close();
     $conn->close();
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -47,10 +64,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>HealthTrackAI</title>
     <link rel="stylesheet" href="assets/css/index.css">
     <script src="assets/js/index.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <header>
         <h1>HealthTrackAI</h1>
         <nav>
@@ -71,17 +88,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <section class="login-admin" id="admin-login">
             <h2>Admin Login</h2>
-            <form action="#">
+            <form action="" method="POST">
                 <div>
                     <label for="admin-id">Admin ID:</label>
-                    <input type="text" id="admin-id" name="admin-id" required>
+                    <input type="text" id="admin-id" name="admin_id" required>
                 </div>
-
                 <div>
                     <label for="admin-password">Password:</label>
                     <input type="password" id="admin-password" name="admin-password" required>
                 </div>
-
                 <button type="submit">LOGIN</button>
             </form>
         </section>
@@ -93,12 +108,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <label for="user-email">Email:</label>
                     <input type="email" id="user-email" name="user-email" required>
                 </div>
-
                 <div>
                     <label for="user-password">Password:</label>
                     <input type="password" id="user-password" name="user-password" required>
                 </div>
-
                 <button type="submit">LOGIN</button>
                 <p>Not registered? <a href="register.php">Create an account</a></p>
             </form>
