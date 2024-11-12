@@ -69,11 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <body>
     <header>
-<<<<<<< HEAD
     <h1><a href="landing.php" style="color: white; text-decoration: none;">HealthTrackAI</a></h1>
-=======
-        <h1>HealthTrackAI</h1>
->>>>>>> 25ac0eae699d822327491e9cdd5d3e664862fa9c
         <nav>
             <ul>
                 <li><a href="#chat"><i class="fas fa-home"></i> HOME</a></li>
