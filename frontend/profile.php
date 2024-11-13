@@ -37,7 +37,7 @@ $conn->close();
     <link rel="stylesheet" href="">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-    /* Các style chung, giống như trong hospitals.php */
+    /* Các style chung */
     * {
         margin: 0;
         padding: 0;
@@ -84,26 +84,62 @@ $conn->close();
 
     /* Main Content */
     main {
-        padding: 100px 20px 20px 20px; /* Thêm padding để tránh bị che khuất bởi header */
+        padding: 80px 20px 20px 20px; /* Thêm padding để tránh bị che khuất bởi header */
     }
 
     .profile {
-        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
         background-color: #fff;
-        padding: 30px;
+        padding: 40px;
         border-radius: 8px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 800px;
+        margin: 0 auto;
     }
 
     .profile h2 {
         color: #007bff;
         font-size: 28px;
-        margin-bottom: 20px;
+        margin-bottom: 30px;
+        text-align: left;
+        width: 100%;
+    }
+
+    .profile-details {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        width: 100%;
+        margin-bottom: 30px;
     }
 
     .profile-details p {
         font-size: 18px;
-        margin-bottom: 10px;
+        display: flex;
+        justify-content: flex-start;
+        font-weight: 500;
+        background-color: #f9f9f9;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        width: 100%;
+    }
+
+    .profile-details p strong {
+        width: 25%; /* Giảm chiều rộng của tên thông tin */
+        padding-right: 15px; /* Thêm khoảng cách phải */
+    }
+
+    .profile-details p span {
+        width: 70%; /* Đảm bảo phần giá trị thông tin chiếm phần còn lại */
+    }
+
+    .profile-buttons {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
     }
 
     .profile-buttons .btn {
@@ -150,6 +186,14 @@ $conn->close();
         .profile {
             padding: 20px;
         }
+
+        .profile-details p {
+            font-size: 16px;
+        }
+
+        .profile h2 {
+            font-size: 24px;
+        }
     }
     </style>
 </head>
@@ -174,16 +218,15 @@ $conn->close();
         <section class="profile">
             <h2>Welcome to your profile</h2>
             <div class="profile-details">
-                <p><strong>Name:</strong> <?php echo htmlspecialchars($user['name']); ?></p>
-                <p><strong>Email:</strong> <?php echo htmlspecialchars($user['email']); ?></p>
-                <p><strong>Contact:</strong> <?php echo htmlspecialchars($user['contact']); ?></p>
-                <p><strong>Gender:</strong> <?php echo htmlspecialchars(ucfirst($user['gender'])); ?></p>
+                <p><strong>Name:</strong> <span><?php echo htmlspecialchars($user['name']); ?></span></p>
+                <p><strong>Email:</strong> <span><?php echo htmlspecialchars($user['email']); ?></span></p>
+                <p><strong>Contact:</strong> <span><?php echo htmlspecialchars($user['contact']); ?></span></p>
+                <p><strong>Gender:</strong> <span><?php echo htmlspecialchars(ucfirst($user['gender'])); ?></span></p>
             </div>
 
             <!-- Buttons -->
             <div class="profile-buttons">
                 <a href="edit_profile.php" class="btn">Edit Profile</a>
-                <a href="logout.php" class="btn">Exit</a>
             </div>
         </section>
     </main>
