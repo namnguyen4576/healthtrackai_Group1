@@ -1,228 +1,142 @@
-/* Reset styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+  /* Reset some default styles */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-/* Scroll Behavior */
-html {
-  scroll-behavior: smooth;
-}
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f7fc;
+  }
 
-/* Body */
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f5f5f5;
-}
+  /* Header */
+  header {
+    background-color: #007bff;
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+  }
 
-/* Header */
-header {
-  background-color: #007bff;
-  color: white;
-  padding: 15px 20px;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  z-index: 999;
-}
-
-header h1 {
-  margin: 0;
-  font-size: 28px;
-  font-weight: bold;
-  text-align: left;
-}
-
-header nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-}
-
-header nav ul li {
-  margin: 0 15px;
-  border: 2px solid transparent;
-  border-radius: 4px;
-  transition: all 0.3s ease;
-}
-
-header nav ul li:hover {
-  border-color: white;
-  background-color: rgba(255, 255, 255, 0.2);
-}
-
-header nav ul li a {
-  color: white;
-  text-decoration: none;
-  padding: 10px 20px;
-  display: block;
-}
-
-header nav ul li a.active {
-  background-color: rgba(255, 255, 255, 0.2);
-  border-color: white;
-  border-radius: 4px;
-}
-
-/* Welcome Section */
-.welcome-message {
-  padding: 130px 20px 20px 20px; /* Space for fixed header */
-  font-size: 24px;
-  color: #333;
-  text-align: left;
-}
-
-.welcome-message hr {
-  border: 0;
-  height: 1px;
-  background: #7c34b8;
-  margin-top: 10px;
-}
-
-/* Hospital List Section */
-.hospital-list {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-}
-
-.hospital-list h2 {
-  color: #007bff;
-  font-size: 30px;
-  text-align: center;
-  margin-bottom: 25px;
-}
-
-.hospital {
-  padding: 20px;
-  border-bottom: 1px solid #ddd;
-  transition: background-color 0.3s ease;
-}
-
-.hospital:hover {
-  background-color: #f9f9f9;
-}
-
-.hospital h3 {
-  color: #333;
-  font-size: 24px;
-  margin: 0;
-}
-
-.hospital p {
-  font-size: 16px;
-  color: #555;
-  margin: 5px 0;
-}
-
-/* Style for the last hospital in the list to remove the border */
-.hospital:last-child {
-  border-bottom: none;
-}
-
-/* Appointment Form */
-.appointment-form {
-  margin-top: 100px;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.appointment-form h2 {
-  color: #007bff;
-  font-size: 28px;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.appointment-form .form-group {
-  margin-bottom: 15px;
-}
-
-.appointment-form label {
-  display: block;
-  font-size: 16px;
-  color: #333;
-  margin-bottom: 5px;
-}
-
-.appointment-form input[type="text"],
-.appointment-form input[type="tel"],
-.appointment-form textarea,
-.appointment-form select {
-  width: 100%;
-  padding: 12px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  transition: border 0.3s ease;
-}
-
-.appointment-form input[type="text"]:focus,
-.appointment-form input[type="tel"]:focus,
-.appointment-form textarea:focus,
-.appointment-form select:focus {
-  border-color: #007bff;
-  outline: none;
-}
-
-.appointment-form button {
-  padding: 12px 25px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 18px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.appointment-form button:hover {
-  background-color: #0056b3;
-}
-
-/* Footer */
-footer {
-  background-color: #007bff;
-  color: white;
-  padding: 20px;
-  text-align: center;
-}
-
-footer p {
-  margin: 0;
-  font-size: 16px;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
   header h1 {
-    font-size: 24px;
+    margin-bottom: 0.5rem;
+    font-size: 1.8rem;
   }
 
-  header nav ul li {
-    margin: 0 10px;
+  header nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
   }
 
-  .hospital-list {
-    max-width: 100%;
-    padding: 15px;
+  header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+  }
+
+  header nav ul li a.active {
+    text-decoration: underline;
+  }
+
+  /* Main Content */
+  main {
+    padding: 100px 20px 20px 20px; /* Added padding to avoid overlap with the header */
   }
 
   .appointment-form {
-    padding: 15px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
-}
+
+  .appointment-form h2 {
+    color: #007bff;
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .appointment-form .form-group {
+    margin-bottom: 15px;
+  }
+
+  .appointment-form label {
+    display: block;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 5px;
+  }
+
+  .appointment-form input[type="text"],
+  .appointment-form input[type="tel"],
+  .appointment-form input[type="date"],
+  .appointment-form input[type="time"],
+  .appointment-form textarea {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    transition: border 0.3s ease;
+  }
+
+  .appointment-form input[type="text"]:focus,
+  .appointment-form input[type="tel"]:focus,
+  .appointment-form input[type="date"]:focus,
+  .appointment-form input[type="time"]:focus,
+  .appointment-form textarea:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+
+  .appointment-form button {
+    padding: 12px 25px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .appointment-form button:hover {
+    background-color: #0056b3;
+  }
+
+  /* Footer */
+  footer {
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    width: 100%;
+    margin-top: auto; /* Ensures the footer stays at the bottom */
+  }
+
+  footer p {
+    margin: 0;
+    font-size: 14px;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    header h1 {
+      font-size: 24px;
+    }
+
+    header nav ul li {
+      margin: 0 10px;
+    }
+
+    .appointment-form {
+      padding: 15px;
+    }
+  }

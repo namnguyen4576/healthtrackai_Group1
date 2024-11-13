@@ -5,48 +5,53 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HealthTrackAI</title>
-  <link rel="stylesheet" href="assets/css/home.css">
+  <link rel="stylesheet" href="">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    /* Background */
-    body {
-      background-color: #f0f8ff;
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
+  /* Reset some default styles */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-    header {
-      background-color: #007bff;
-      color: white;
-      padding: 15px 0;
-      text-align: center;
-      position: relative;
-      z-index: 2; /* Ensure header stays above other elements */
-    }
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f7fc;
+  }
 
-    nav ul {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      list-style: none;
-      padding: 0;
-    }
+  /* Header */
+  header {
+    background-color: #007bff;
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+  }
 
-    nav ul li a {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-    }
+  header h1 {
+    margin-bottom: 0.5rem;
+    font-size: 1.8rem;
+  }
 
-    nav ul li a.active {
-      border-bottom: 2px solid white;
-    }
+  header nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+  }
 
-    .welcome-message {
-      text-align: center;
-      margin: 20px;
-    }
+  header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+  }
+
+  header nav ul li a.active {
+    text-decoration: underline;
+  }
 
     .slideshow {
       position: relative;

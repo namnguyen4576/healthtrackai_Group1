@@ -61,19 +61,4 @@
     border: 2px solid white;
     background-color: rgba(255, 255, 255, 0.2);
     border-radius: 4px;
-  }   
-  
-  .welcome-message {
-    padding: 100px 20px;
-    font-size: 24px;
-    margin-left: 10px;
-    color: #333;
-    text-align: left;
-  }
-  
-  .welcome-message hr {
-    border: 0;
-    height: 1px;
-    background: #7c34b8;
-    margin-top: 10px;
   }
