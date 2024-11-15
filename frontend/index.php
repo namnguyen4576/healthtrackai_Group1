@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <h1><a href="landing.php" style="color: white; text-decoration: none;">HealthTrackAI</a></h1>
         <nav>
             <ul>
-                <li><a href="#chat"><i class="fas fa-home"></i> HOME</a></li>
+                <li><a href="landing.php"><i class="fas fa-home"></i> HOME</a></li>
                 <li><a href="#admin-login"><i class="fas fa-user-shield"></i> ADMIN LOGIN</a></li>
                 <li><a href="#user-login"><i class="fas fa-user"></i> USER LOGIN</a></li>
                 <li><a href="#about"><i class="fas fa-info-circle"></i> ABOUT US</a></li>

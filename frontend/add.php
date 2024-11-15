@@ -24,18 +24,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $gender = $_POST['gender'];
     $password = $_POST['password'];
 
-    // Hash the password before storing in the database
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    // Check if email or contact already exists
+    $checkSql = "SELECT * FROM users WHERE email = ? OR contact = ?";
+    $stmt = $conn->prepare($checkSql);
+    $stmt->bind_param("ss", $email, $contact);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    $insertSql = "INSERT INTO users (name, email, contact, gender, password) VALUES (?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($insertSql);
-    $stmt->bind_param("sssss", $name, $email, $contact, $gender, $hashedPassword);
-    
-    if ($stmt->execute()) {
-        header("Location: admin.php"); // Redirect to customer list page
-        exit();
+    if ($result->num_rows > 0) {
+        // If a record is found with the same email or contact
+        echo "<script>alert('Email or contact number already exists. Please enter different information.');</script>";
     } else {
-        echo "Error adding customer information.";
+        // Hash the password before storing in the database
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+        // Insert the new user data into the database
+        $insertSql = "INSERT INTO users (name, email, contact, gender, password) VALUES (?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($insertSql);
+        $stmt->bind_param("sssss", $name, $email, $contact, $gender, $hashedPassword);
+        
+        if ($stmt->execute()) {
+            header("Location: admin.php"); // Redirect to customer list page
+            exit();
+        } else {
+            echo "Error adding customer information.";
+        }
     }
 }
 ?>

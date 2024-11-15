@@ -19,6 +19,9 @@ if ($conn->connect_error) {
 // Retrieve customer data
 $sql = "SELECT id, name, email, contact, gender FROM users";
 $result = $conn->query($sql);
+
+// Close the connection
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -61,7 +64,7 @@ $result = $conn->query($sql);
         }
 
         header h1 {
-            margin: 0;
+            margin: 6px;
             font-size: 24px;
         }
 
@@ -73,11 +76,17 @@ $result = $conn->query($sql);
         nav ul li {
             display: inline;
             margin: 0 10px;
+
         }
 
         nav ul li a {
             color: #ffffff;
             text-decoration: none;
+            font-weight: bold;
+            padding: 8px 12px;
+            background-color: #1c80b8;
+            border-radius: 4px;
+            transition: background-color 0.3s;
         }
 
         /* Table Container */
@@ -162,55 +171,85 @@ $result = $conn->query($sql);
         .add-btn:hover {
             background-color: #218838; /* Darker green on hover */
         }
+
+        .section-btn {
+            margin: 10px 0;
+            color: #ffffff;
+            background-color: #2ca4ed;
+            padding: 5px 10px;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        .section-btn:hover {
+            background-color: #1c80b8;
+        }
+
+        .message {
+            padding: 10px;
+            background-color: #ffcc00;
+            color: #333;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
-    <header>
-        <h1>HealthTrackAI</h1>
-        <nav>
-            <ul>
-                <li><a href="index.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-            </ul>
-        </nav>
-    </header>
+<header>
+    <h1>HealthTrackAI</h1>
+    <nav>
+        <ul>
+            <li><a href="admin.php"><i class="fas fa-key"></i>Acount User List</a></li>
+            <li><a href="admin_doctor.php" class="section-btn">Doctor list</a></li>
+            <li><a href="schedule_appointment.php" class="section-btn">Schedule Appointment list</a></li>
+            <li><a href="add_doctor.php" class="section-btn">Add Doctor</a></li>
+            <li><a href="add_schedule_appointment.php" class="section-btn">Add Schedule Appointment</a></li>
+            <li><a href="index.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        </ul>
+    </nav>
+</header>
 
-    <div class="table-container">
-        <h2>Customer List</h2>
-        <a href="add.php" class="add-btn">Add</a>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Hotline</th>
-                    <th>Gender</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                if ($result && $result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<tr>
-                                <td>{$row['id']}</td>
-                                <td>{$row['name']}</td>
-                                <td>{$row['email']}</td>
-                                <td>{$row['contact']}</td>
-                                <td>{$row['gender']}</td>
-                                <td>
-                                    <a href='edit.php?id={$row['id']}' class='edit-btn'>Edit</a>
-                                    <a href='delete.php?id={$row['id']}' class='delete-btn'>Delete</a>
-                                </td>
-                              </tr>";
-                    }
-                } else {
-                    echo "<tr><td colspan='6'>No customers found.</td></tr>";
+<div class="table-container">
+    <h2>Customer List</h2>
+    <a href="add.php" class="add-btn">Add Customer</a>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Hotline</th>
+                <th>Gender</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            // Reconnect to the database and fetch results again for displaying customer data
+            $conn = new mysqli($servername, $username, $password, $dbname);
+            if ($result && $result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    echo "<tr>
+                            <td>{$row['id']}</td>
+                            <td>{$row['name']}</td>
+                            <td>{$row['email']}</td>
+                            <td>{$row['contact']}</td>
+                            <td>{$row['gender']}</td>
+                            <td>
+                                <a href='edit.php?id={$row['id']}' class='edit-btn'>Edit</a>
+                                <a href='delete.php?id={$row['id']}' class='delete-btn'>Delete</a>
+                            </td>
+                          </tr>";
                 }
-                $conn->close();
-                ?>
-            </tbody>
-        </table>
-    </div>
+            } else {
+                echo "<tr><td colspan='6'>No customers found.</td></tr>";
+            }
+            // Close the connection again after use
+            $conn->close();
+            ?>
+        </tbody>
+    </table>
+</div>
+
 </body>
 </html>

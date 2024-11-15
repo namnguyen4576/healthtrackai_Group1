@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h1>HealthTrackAI</h1>
         <nav>
             <ul>
-                <li><a href="index.php" onclick="redirectToHome()"><i class="fas fa-home"></i> HOME</a></li>
+                <li><a href="landing.php" onclick="redirectToHome()"><i class="fas fa-home"></i> HOME</a></li>
             </ul>
         </nav>
     </header>
