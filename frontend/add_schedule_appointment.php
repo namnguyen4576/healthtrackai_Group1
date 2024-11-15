@@ -17,17 +17,17 @@ if ($conn->connect_error) {
 }
 
 // Fetch users and doctors for dropdowns
-$users_result = $conn->query("SELECT id, name FROM users");
-// $doctors_result = $conn->query("SELECT id, name FROM doctors");
+$users_result = $conn->query("SELECT name FROM users");
+$doctors_result = $conn->query("SELECT name FROM doctor");
 
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $user_id = $_POST['user_id'];
-    $doctor_id = $_POST['doctor_id'];
+    $user_name = $_POST['user_name'];
+    $doctor_name = $_POST['doctor_name'];
     $appointment_date = $_POST['appointment_date'];
 
     // Insert the new appointment into the database
-    $sql = "INSERT INTO appointments (user_id, doctor_id, date) VALUES ('$user_id', '$doctor_id', '$appointment_date')";
+    $sql = "INSERT INTO appointments (user_name, doctor_name, date) VALUES ('$user_name', '$doctor_name', '$appointment_date')";
 
     if ($conn->query($sql) === TRUE) {
         // Redirect to appointment list after successful insertion
@@ -47,10 +47,9 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Schedule Appointment</title>
-    <link rel="stylesheet" href="assets/css/home.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-/* Reset */
+    /* Reset */
 * {
     margin: 0;
     padding: 0;
@@ -252,20 +251,16 @@ table tr:nth-child(even) {
 .section-btn:hover {
     background-color: #1c80b8;
 }
-
-
     </style>
-
-
 </head>
 <body>
 <header>
     <h1>HealthTrackAI</h1>
     <nav>
         <ul>
-            <li><a href="admin.php"><i class="fas fa-key"></i>Acount User List</a></li>
-            <li><a href="admin_doctor.php" class="section-btn">Doctor list</a></li>
-            <li><a href="schedule_appointment.php" class="section-btn">Schedule Appointment list</a></li>
+            <li><a href="admin.php"><i class="fas fa-key"></i>Account User List</a></li>
+            <li><a href="admin_doctor.php" class="section-btn">Doctor List</a></li>
+            <li><a href="schedule_appointment.php" class="section-btn">Schedule Appointment List</a></li>
             <li><a href="add_doctor.php" class="section-btn">Add Doctor</a></li>
             <li><a href="add_schedule_appointment.php" class="section-btn">Add Schedule Appointment</a></li>
             <li><a href="index.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
@@ -276,12 +271,12 @@ table tr:nth-child(even) {
 <div class="form-container">
     <h2>Schedule an Appointment</h2>
     <form method="POST" action="schedule_appointment.php">
-        <label for="user_id">Select Customer</label>
-        <select id="user_id" name="user_id" required>
+        <label for="user_name">Select Customer</label>
+        <select id="user_name" name="user_name" required>
             <?php
             if ($users_result->num_rows > 0) {
                 while ($user = $users_result->fetch_assoc()) {
-                    echo "<option value='{$user['id']}'>{$user['name']}</option>";
+                    echo "<option value='{$user['name']}'>{$user['name']}</option>";
                 }
             } else {
                 echo "<option value=''>No customers found</option>";
@@ -289,12 +284,12 @@ table tr:nth-child(even) {
             ?>
         </select>
 
-        <label for="doctor_id">Select Doctor</label>
-        <select id="doctor_id" name="doctor_id" required>
+        <label for="doctor_name">Select Doctor</label>
+        <select id="doctor_name" name="doctor_name" required>
             <?php
             if ($doctors_result->num_rows > 0) {
                 while ($doctor = $doctors_result->fetch_assoc()) {
-                    echo "<option value='{$doctor['id']}'>{$doctor['name']}</option>";
+                    echo "<option value='{$doctor['name']}'>{$doctor['name']}</option>";
                 }
             } else {
                 echo "<option value=''>No doctors found</option>";

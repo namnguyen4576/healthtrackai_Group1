@@ -1,32 +1,29 @@
 <?php
-// Start the session
 session_start();
 
-// // Connect to the database
-// $servername = "127.0.0.1";
-// $username = "root";
-// $password = "";
-// $dbname = "healthtrackai";
+// Kết nối với cơ sở dữ liệu
+$servername = "127.0.0.1";
+$username = "root";
+$password = "";
+$dbname = "healthtrackai";
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-// // Create connection
-// $conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
-// // Check the connection
-// if ($conn->connect_error) {
-//     die("Connection failed: " . $conn->connect_error);
-// }
-
-// Check if the form is submitted to add a new appointment
+// Kiểm tra nếu form đã được gửi
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $user_id = $_POST['user_id'];
-    $doctor_id = $_POST['doctor_id'];
+    $user_name = $_POST['user_name'];
+    $doctor_name = $_POST['doctor_name'];
     $appointment_date = $_POST['appointment_date'];
 
-    // Insert the new appointment into the database
-    $sql = "INSERT INTO appointments (user_id, doctor_id, date) VALUES ('$user_id', '$doctor_id', '$appointment_date')";
+    // Thêm lịch hẹn vào cơ sở dữ liệu
+    $sql = "INSERT INTO appointments (user_name, doctor_name, date) 
+            VALUES ('$user_name', '$doctor_name', '$appointment_date')";
 
     if ($conn->query($sql) === TRUE) {
-        // Redirect to the same page to refresh the appointment list
+        // Chuyển hướng về trang danh sách lịch hẹn sau khi thêm thành công
         header('Location: schedule_appointment.php');
         exit();
     } else {
@@ -34,17 +31,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-// // Fetch users and doctors for dropdowns
-// $users_result = $conn->query("SELECT id, name FROM users");
-// $doctors_result = $conn->query("SELECT id, name FROM doctors");
+// Lấy danh sách các lịch hẹn từ cơ sở dữ liệu
+$appointments_result = $conn->query("SELECT id, user_name, doctor_name, date FROM appointments");
 
-// // Fetch existing appointments for display
-// $appointments_result = $conn->query("SELECT appointments.id, users.name as user_name, doctors.name as doctor_name, appointments.date 
-//                                     FROM appointments
-//                                     JOIN users ON appointments.user_id = users.id
-//                                     JOIN doctors ON appointments.doctor_id = doctors.id");
-
-// $conn->close();
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -52,11 +42,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Doctor</title>
-    <link rel="stylesheet" href="assets/css/home.css">
+    <title>Schedule Appointment List</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-/* Reset */
+        /* Reset */
 * {
     margin: 0;
     padding: 0;
@@ -256,60 +245,51 @@ table tr:nth-child(even) {
 .section-btn:hover {
     background-color: #1c80b8;
 }
-
-    </style>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Schedule Appointment</title>
-    <link rel="stylesheet" href="assets/css/home.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        /* Add your CSS styling here (same as before) */
     </style>
 </head>
 <body>
-<header>
-    <h1>HealthTrackAI</h1>
-    <nav>
-        <ul>
-            <li><a href="admin.php"><i class="fas fa-key"></i> Account User List</a></li>
-            <li><a href="admin_doctor.php" class="section-btn">Doctor list</a></li>
-            <li><a href="schedule_appointment.php" class="section-btn">Schedule Appointment list</a></li>
-            <li><a href="add_doctor.php" class="section-btn">Add Doctor</a></li>
-            <li><a href="add_schedule_appointment.php" class="section-btn">Add Schedule Appointment</a></li>
-            <li><a href="index.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-        </ul>
-    </nav>
-</header>
+    <header>
+        <h1>HealthTrackAI</h1>
+        <nav>
+            <ul>
+                <li><a href="admin.php"><i class="fas fa-key"></i>Account User List</a></li>
+                <li><a href="admin_doctor.php" class="section-btn">Doctor List</a></li>
+                <li><a href="schedule_appointment.php" class="section-btn">Schedule Appointment List</a></li>
+                <li><a href="add_doctor.php" class="section-btn">Add Doctor</a></li>
+                <li><a href="add_schedule_appointment.php" class="section-btn">Add Schedule Appointment</a></li>
+                <li><a href="index.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </nav>
+    </header>
 
-
-<div class="table-container">
-    <h2>Appointments List</h2>
-    <table>
-        <tr>
-            <th>Customer</th>
-            <th>Doctor</th>
-            <th>Appointment Date</th>
-            <th>Action</th>
-        </tr>
-        <?php
-        if ($appointments_result->num_rows > 0) {
-            while ($appointment = $appointments_result->fetch_assoc()) {
-                echo "<tr>";
-                echo "<td>{$appointment['user_name']}</td>";
-                echo "<td>{$appointment['doctor_name']}</td>";
-                echo "<td>{$appointment['date']}</td>";
-                echo "<td><a href='delete_appointment.php?id={$appointment['id']}' class='delete-btn'>Delete</a></td>";
-                echo "</tr>";
-            }
-        } else {
-            echo "<tr><td colspan='4'>No appointments found</td></tr>";
-        }
-        ?>
-    </table>
-</div>
+    <div class="table-container">
+        <h2>Scheduled Appointments</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Customer</th>
+                    <th>Doctor</th>
+                    <th>Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                if ($appointments_result->num_rows > 0) {
+                    while ($appointment = $appointments_result->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<td>{$appointment['user_name']}</td>";
+                        echo "<td>{$appointment['doctor_name']}</td>";
+                        echo "<td>{$appointment['date']}</td>";
+                        echo "<td><a href='delete_appointment.php?id={$appointment['id']}' class='delete-btn'>Delete</a></td>";
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='3'>No appointments found</td></tr>";
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
