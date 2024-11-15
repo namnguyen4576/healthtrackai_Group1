@@ -248,6 +248,7 @@ $conn->close();
         <input type="text" id="image" name="image" value="<?php echo $row['image']; ?>">
 
         <button type="submit">Save Changes</button>
+        <a href="admin_doctor.php">Back</a>
     </form>
 </div>
 </body>

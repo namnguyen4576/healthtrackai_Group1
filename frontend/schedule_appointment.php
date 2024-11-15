@@ -281,11 +281,14 @@ table tr:nth-child(even) {
                         echo "<td>{$appointment['user_name']}</td>";
                         echo "<td>{$appointment['doctor_name']}</td>";
                         echo "<td>{$appointment['date']}</td>";
-                        echo "<td><a href='delete_appointment.php?id={$appointment['id']}' class='delete-btn'>Delete</a></td>";
+                        echo "<td>
+                                <a href='edit_appointment.php?id={$appointment['id']}' class='edit-btn'>Edit</a>
+                                <a href='delete_appointment.php?id={$appointment['id']}' class='delete-btn'>Delete</a>
+                              </td>";
                         echo "</tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='3'>No appointments found</td></tr>";
+                    echo "<tr><td colspan='4'>No appointments found</td></tr>";
                 }
                 ?>
             </tbody>
