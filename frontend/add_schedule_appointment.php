@@ -43,265 +43,247 @@ $conn->close();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Schedule Appointment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-    /* Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
 
-/* Body Style */
-body {
-    background-color: #e9ecef;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    padding-top: 70px;
-    color: #333;
-}
+        body {
+            background: #f4f6f9;
+            color: #333;
+            padding: 20px;
+            min-height: 100vh;
+        }
 
-/* Header */
-header {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    padding: 15px;
-    background-color: #2ca4ed;
-    color: #ffffff;
-    text-align: center;
-    z-index: 1000;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
-}
+        header {
+            background-color: #007bff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            color: #fff;
+            margin-bottom: 20px;
+            text-align: center;
+        }
 
-header h1 {
-    font-size: 24px;
-}
+        header h1 {
+            font-size: 28px;
+            font-weight: 600;
+        }
 
-/* Navigation */
-nav ul {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
-}
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
 
-nav ul li {
-    margin: 0 10px;
-}
+        nav ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: 500;
+            padding: 10px 15px;
+            border-radius: 6px;
+            background: #0056b3;
+            transition: background 0.3s ease;
+        }
 
-nav ul li a {
-    color: #ffffff;
-    text-decoration: none;
-    font-weight: bold;
-    padding: 8px 12px;
-    background-color: #1c80b8;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-}
+        nav ul li a:hover {
+            background: #004085;
+        }
 
-nav ul li a:hover {
-    background-color: #14699d;
-}
+        /* Form Container */
+        .form-container {
+            background-color: #ffffff;
+            padding: 25px;
+            margin-top: 80px;
+            border-radius: 10px;
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            /* Stack items vertically */
+            align-items: stretch;
+        }
 
-/* Form Container */
-.form-container {
-    background-color: #ffffff;
-    padding: 25px;
-    margin-top: 80px;
-    border-radius: 10px;
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
-    width: 80%;
-    max-width: 600px;
-    display: flex;
-    flex-direction: column;  /* Stack items vertically */
-    align-items: stretch;
-}
+        .form-container h2 {
+            text-align: center;
+            color: #2ca4ed;
+            margin-bottom: 20px;
+        }
 
-.form-container h2 {
-    text-align: center;
-    color: #2ca4ed;
-    margin-bottom: 20px;
-}
+        .form-container label {
+            margin: 10px 0 5px;
+            font-size: 16px;
+            color: #555;
+            font-weight: 500;
+        }
 
-.form-container label {
-    margin: 10px 0 5px;
-    font-size: 16px;
-    color: #555;
-    font-weight: 500;
-}
+        .form-container input,
+        .form-container select,
+        .form-container button {
+            padding: 12px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            transition: border-color 0.3s;
+            width: 100%;
+            /* Make inputs and buttons full width */
+        }
 
-.form-container input,
-.form-container select,
-.form-container button {
-    padding: 12px;
-    font-size: 16px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    transition: border-color 0.3s;
-    width: 100%;  /* Make inputs and buttons full width */
-}
+        .form-container input:focus,
+        .form-container select:focus {
+            border-color: #2ca4ed;
+        }
 
-.form-container input:focus,
-.form-container select:focus {
-    border-color: #2ca4ed;
-}
+        .form-container button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
 
-.form-container button {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
+        .form-container button:hover {
+            background-color: #218838;
+        }
 
-.form-container button:hover {
-    background-color: #218838;
-}
+        /* Form Container */
+        .form-container {
+            background-color: #ffffff;
+            padding: 40px;
+            margin: 40px auto;
+            border-radius: 15px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            width: 80%;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+        }
 
-/* Table Container */
-.table-container {
-    margin: 40px 0;
-    width: 90%;
-    max-width: 800px;
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
+        .form-container h2 {
+            text-align: center;
+            color: #007bff;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+        }
 
-.table-container h2 {
-    color: #2ca4ed;
-    text-align: center;
-    margin-bottom: 20px;
-}
+        .form-container label {
+            margin: 10px 0 5px;
+            font-size: 14px;
+            color: #457b9d;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
 
-/* Table Styles */
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
+        .form-container input,
+        .form-container select {
+            padding: 15px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            background: #f8f9fa;
+        }
 
-table th,
-table td {
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-    text-align: center;
-}
+        .form-container input:focus,
+        .form-container select:focus {
+            border-color: #2ca4ed;
+            box-shadow: 0 0 4px rgba(44, 164, 237, 0.5);
+            outline: none;
+        }
 
-table th {
-    background-color: #2ca4ed;
-    color: #ffffff;
-}
+        .form-container button {
+            padding: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #28a745, #218838);
+            color: #fff;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
 
-table tr:nth-child(even) {
-    background-color: #f8f9fa;
-}
+        .form-container button:hover {
+            background: linear-gradient(135deg, #218838, #28a745);
+            transform: scale(1.02);
+        }
 
-/* Button Styles */
-.edit-btn,
-.delete-btn,
-.add-btn,
-.section-btn {
-    padding: 8px 12px;
-    font-size: 14px;
-    color: #ffffff;
-    text-decoration: none;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-}
-
-.edit-btn {
-    background-color: #ffc107;
-}
-
-.edit-btn:hover {
-    background-color: #e0a800;
-}
-
-.delete-btn {
-    background-color: #dc3545;
-}
-
-.delete-btn:hover {
-    background-color: #c82333;
-}
-
-.add-btn {
-    background-color: #28a745;
-    float: right;
-}
-
-.add-btn:hover {
-    background-color: #218838;
-}
-
-.section-btn {
-    background-color: #2ca4ed;
-}
-
-.section-btn:hover {
-    background-color: #1c80b8;
-}
+        .form-container button:active {
+            transform: scale(0.98);
+        }
     </style>
 </head>
+
 <body>
-<header>
-    <h1>HealthTrackAI</h1>
-    <nav>
-        <ul>
-            <li><a href="admin.php"><i class="fas fa-key"></i>Account User List</a></li>
-            <li><a href="admin_doctor.php" class="section-btn">Doctor List</a></li>
-            <li><a href="schedule_appointment.php" class="section-btn">Schedule Appointment List</a></li>
-            <li><a href="add_doctor.php" class="section-btn">Add Doctor</a></li>
-            <li><a href="add_schedule_appointment.php" class="section-btn">Add Schedule Appointment</a></li>
-            <li><a href="index.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-        </ul>
-    </nav>
-</header>
+    <header>
+        <h1>HealthTrackAI - Add Schedule Appointment</h1>
+        <nav>
+            <ul>
+                <li><a href="admin.php">User List</a></li>
+                <li><a href="admin_doctor.php">Doctor List</a></li>
+                <li><a href="schedule_appointment.php">Appointments</a></li>
+                <li><a href="add_doctor.php">Add Doctor</a></li>
+                <li><a href="add_schedule_appointment.php" class="section-btn">Add Schedule Appointment</a></li>
+                <li><a href="index.php">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
 
-<div class="form-container">
-    <h2>Schedule an Appointment</h2>
-    <form method="POST" action="schedule_appointment.php">
-        <label for="user_name">Select Customer</label>
-        <select id="user_name" name="user_name" required>
-            <?php
-            if ($users_result->num_rows > 0) {
-                while ($user = $users_result->fetch_assoc()) {
-                    echo "<option value='{$user['name']}'>{$user['name']}</option>";
+    <div class="form-container">
+        <h2>Schedule an Appointment</h2>
+        <form method="POST" action="schedule_appointment.php">
+            <label for="user_name">Select Customer</label>
+            <select id="user_name" name="user_name" required>
+                <?php
+                if ($users_result->num_rows > 0) {
+                    while ($user = $users_result->fetch_assoc()) {
+                        echo "<option value='{$user['name']}'>{$user['name']}</option>";
+                    }
+                } else {
+                    echo "<option value=''>No customers found</option>";
                 }
-            } else {
-                echo "<option value=''>No customers found</option>";
-            }
-            ?>
-        </select>
+                ?>
+            </select>
 
-        <label for="doctor_name">Select Doctor</label>
-        <select id="doctor_name" name="doctor_name" required>
-            <?php
-            if ($doctors_result->num_rows > 0) {
-                while ($doctor = $doctors_result->fetch_assoc()) {
-                    echo "<option value='{$doctor['name']}'>{$doctor['name']}</option>";
+            <label for="doctor_name">Select Doctor</label>
+            <select id="doctor_name" name="doctor_name" required>
+                <?php
+                if ($doctors_result->num_rows > 0) {
+                    while ($doctor = $doctors_result->fetch_assoc()) {
+                        echo "<option value='{$doctor['name']}'>{$doctor['name']}</option>";
+                    }
+                } else {
+                    echo "<option value=''>No doctors found</option>";
                 }
-            } else {
-                echo "<option value=''>No doctors found</option>";
-            }
-            ?>
-        </select>
+                ?>
+            </select>
 
-        <label for="appointment_date">Appointment Date</label>
-        <input type="datetime-local" id="appointment_date" name="appointment_date" required>
+            <label for="appointment_date">Appointment Date</label>
+            <input type="datetime-local" id="appointment_date" name="appointment_date" required>
 
-        <button type="submit">Schedule Appointment</button>
-    </form>
-</div>
+            <button type="submit">Schedule Appointment</button>
+        </form>
+    </div>
 </body>
+
 </html>

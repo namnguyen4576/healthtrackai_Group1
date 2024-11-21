@@ -46,281 +46,188 @@ $result = $conn->query($sql);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Doctors</title>
-    <link rel="stylesheet" href="assets/css/home.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-/* Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
 
-/* Body Style */
-body {
-    background-color: #e9ecef;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    padding-top: 70px;
-    color: #333;
-}
+        body {
+            background: #f4f6f9;
+            color: #333;
+            padding: 20px;
+            min-height: 100vh;
+        }
 
-/* Header */
-header {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    padding: 15px;
-    background-color: #2ca4ed;
-    color: #ffffff;
-    text-align: center;
-    z-index: 1000;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
-}
+        header {
+            background-color: #007bff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            color: #fff;
+            margin-bottom: 20px;
+            text-align: center;
+        }
 
-header h1 {
-    font-size: 24px;
-}
+        header h1 {
+            font-size: 28px;
+            font-weight: 600;
+        }
 
-/* Navigation */
-nav ul {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
-}
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
 
-nav ul li {
-    margin: 0 10px;
-}
+        nav ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: 500;
+            padding: 10px 15px;
+            border-radius: 6px;
+            background: #0056b3;
+            transition: background 0.3s ease;
+        }
 
-nav ul li a {
-    color: #ffffff;
-    text-decoration: none;
-    font-weight: bold;
-    padding: 8px 12px;
-    background-color: #1c80b8;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-}
+        nav ul li a:hover {
+            background: #004085;
+        }
 
-nav ul li a:hover {
-    background-color: #14699d;
-}
+        .table-container {
+            background: #fff;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
+            width: 90%;
+        }
 
-/* Form Container */
-.form-container {
-    background-color: #ffffff;
-    padding: 25px;
-    margin-top: 80px;
-    border-radius: 10px;
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
-    width: 80%;
-    max-width: 600px;
-}
+        .table-container h2 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
 
-.form-container h2 {
-    text-align: center;
-    color: #2ca4ed;
-    margin-bottom: 20px;
-}
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
 
-.form-container label {
-    margin: 10px 0 5px;
-    font-size: 16px;
-    color: #555;
-    font-weight: 500;
-}
+        table th, table td {
+            padding: 12px 15px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
 
-.form-container input,
-.form-container select {
-    padding: 12px;
-    font-size: 16px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    transition: border-color 0.3s;
-}
+        table th {
+            background-color: #007bff;
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
 
-.form-container input:focus,
-.form-container select:focus {
-    border-color: #2ca4ed;
-}
+        table tr:hover {
+            background: #f8f9fa;
+        }
 
-.form-container button {
-    padding: 12px;
-    font-size: 16px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
+        table td img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
 
-.form-container button:hover {
-    background-color: #218838;
-}
+        .btn {
+            padding: 10px 15px;
+            font-size: 14px;
+            text-decoration: none;
+            color: #fff;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+            display: inline-block;
+        }
 
-/* Table Container */
-.table-container {
-    margin: 40px 0;
-    width: 90%;
-    max-width: 800px;
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
+        .edit-btn {
+            background: #ffc107;
+        }
 
-.table-container h2 {
-    color: #2ca4ed;
-    text-align: center;
-    margin-bottom: 20px;
-}
+        .edit-btn:hover {
+            background: #e0a800;
+        }
 
-/* Table Styles */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px; /* Added margin for spacing */
-}
+        .delete-btn {
+            background: #dc3545;
+        }
 
-table th,
-table td {
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-    text-align: center;
-}
-
-table th {
-    background-color: #2ca4ed;
-    color: #ffffff;
-}
-
-table tr:nth-child(even) {
-    background-color: #f8f9fa;
-}
-
-/* Button Styles */
-td a {
-    padding: 8px 12px;
-    font-size: 14px;
-    color: #ffffff;
-    text-decoration: none;
-    border-radius: 4px;
-    margin: 0 5px; /* Added margin between buttons */
-    display: inline-block; /* Ensure buttons appear inline */
-    transition: background-color 0.3s;
-}
-
-/* Edit Button */
-.edit-btn {
-    background-color: #ffc107;
-}
-
-.edit-btn:hover {
-    background-color: #e0a800;
-}
-
-/* Delete Button */
-.delete-btn {
-    background-color: #dc3545;
-}
-
-.delete-btn:hover {
-    background-color: #c82333;
-}
-
-/* Add spacing between the buttons */
-.edit-btn, .delete-btn {
-    margin-right: 10px; /* Extra margin to prevent buttons from clumping together */
-}
-
-/* Add Button */
-.add-btn {
-    background-color: #28a745;
-    float: right;
-    margin-top: 20px; /* Added margin to separate it from the table */
-}
-
-.add-btn:hover {
-    background-color: #218838;
-}
-
-/* Section Button */
-.section-btn {
-    background-color: #2ca4ed;
-}
-
-.section-btn:hover {
-    background-color: #1c80b8;
-}
+        .delete-btn:hover {
+            background: #c82333;
+        }
     </style>
 </head>
 <body>
-<header>
-    <h1>HealthTrackAI</h1>
-    <nav>
-        <ul>
-            <li><a href="admin.php"><i class="fas fa-key"></i>Acount User List</a></li>
-            <li><a href="admin_doctor.php" class="section-btn">Doctor list</a></li>
-            <li><a href="schedule_appointment.php" class="section-btn">Schedule Appointment list</a></li>
-            <li><a href="add_doctor.php" class="section-btn">Add Doctor</a></li>
-            <li><a href="add_schedule_appointment.php" class="section-btn">Add Schedule Appointment</a></li>
-            <li><a href="index.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-        </ul>
-    </nav>
-</header>
+    <header>
+        <h1>HealthTrackAI - Doctor Management</h1>
+        <nav>
+            <ul>
+                <li><a href="admin.php">User List</a></li>
+                <li><a href="admin_doctor.php">Doctor List</a></li>
+                <li><a href="schedule_appointment.php">Appointments</a></li>
+                <li><a href="add_doctor.php">Add Doctor</a></li>
+                <li><a href="add_schedule_appointment.php" class="section-btn">Add Schedule Appointment</a></li>
+                <li><a href="index.php">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
 
-<!-- Doctor Table -->
-<div class="table-container">
-    <h2>Doctor List</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Specialty</th>
-                <th>Qualification</th>
-                <th>Gender</th>
-                <th>Age</th>
-                <th>Nickname</th>
-                <th>Image</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            if ($result && $result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    echo "<tr>
-                            <td>{$row['id']}</td>
-                            <td>{$row['name']}</td>
-                            <td>{$row['specialty']}</td>
-                            <td>{$row['qualification']}</td>
-                            <td>{$row['gender']}</td>
-                            <td>{$row['age']}</td>
-                            <td>{$row['nickname']}</td>
-                            <td><img src='{$row['image']}' alt='Doctor Image' width='50' height='50'></td>
+    <div class="table-container">
+        <h2>Doctor List</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Specialty</th>
+                    <th>Qualification</th>
+                    <th>Gender</th>
+                    <th>Age</th>
+                    <th>Nickname</th>
+                    <th>Image</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if ($result && $result->num_rows > 0): ?>
+                    <?php while ($row = $result->fetch_assoc()): ?>
+                        <tr>
+                            <td><?= $row['id'] ?></td>
+                            <td><?= $row['name'] ?></td>
+                            <td><?= $row['specialty'] ?></td>
+                            <td><?= $row['qualification'] ?></td>
+                            <td><?= $row['gender'] ?></td>
+                            <td><?= $row['age'] ?></td>
+                            <td><?= $row['nickname'] ?></td>
+                            <td><img src="<?= $row['image'] ?>" alt="Doctor Image"></td>
                             <td>
-                                <a href='admin_doctor_edit.php?id={$row['id']}' class='edit-btn'>Edit</a>
-                                <a href='delete_doctor.php?id={$row['id']}' class='delete-btn'>Delete</a>
+                                <a href="admin_doctor_edit.php?id=<?= $row['id'] ?>" class="btn edit-btn">Edit</a>
+                                <a href="delete_doctor.php?id=<?= $row['id'] ?>" class="btn delete-btn">Delete</a>
                             </td>
-                          </tr>";
-                }
-            }
-            ?>
-        </tbody>
-    </table>
-</div>
-
+                        </tr>
+                    <?php endwhile; ?>
+                <?php else: ?>
+                    <tr><td colspan="9">No doctors found.</td></tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
-
-<?php
-$conn->close();
-?>

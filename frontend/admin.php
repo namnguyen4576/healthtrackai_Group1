@@ -30,7 +30,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HealthTrackAI - Customer Information</title>
-    <link rel="stylesheet" href="assets/css/home.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* Reset */
@@ -38,218 +38,190 @@ $conn->close();
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
 
-        /* Body Style */
         body {
-            background-color: #f4f4f4;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            background: #f4f6f9;
+            color: #333;
+            padding: 20px;
             min-height: 100vh;
-            padding-top: 70px; /* Ensure enough space to avoid content being covered */
         }
 
-        /* Header */
         header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 15px;
-            background-color: #2ca4ed;
-            color: #ffffff;
+            background-color: #007bff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            color: #fff;
+            margin-bottom: 20px;
             text-align: center;
-            z-index: 1000;
         }
 
         header h1 {
-            margin: 6px;
-            font-size: 24px;
+            font-size: 28px;
+            font-weight: 600;
         }
 
         nav ul {
             list-style: none;
-            padding: 0;
-        }
-
-        nav ul li {
-            display: inline;
-            margin: 0 10px;
-
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
         }
 
         nav ul li a {
-            color: #ffffff;
             text-decoration: none;
-            font-weight: bold;
-            padding: 8px 12px;
-            background-color: #1c80b8;
-            border-radius: 4px;
-            transition: background-color 0.3s;
+            color: #fff;
+            font-weight: 500;
+            padding: 10px 15px;
+            border-radius: 6px;
+            background: #0056b3;
+            transition: background 0.3s ease;
         }
 
-        /* Table Container */
+        nav ul li a:hover {
+            background: #004085;
+        }
+
         .table-container {
+            background: #fff;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
             width: 90%;
-            max-width: 1000px;
-            margin: 20px auto;
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
         }
 
-        /* Table Title */
         .table-container h2 {
             text-align: center;
-            color: #333;
             font-size: 24px;
             margin-bottom: 20px;
+            color: #007bff;
         }
 
-        /* Table Styles */
         table {
             width: 100%;
             border-collapse: collapse;
+            margin-top: 15px;
         }
 
-        th, td {
-            padding: 12px;
-            border: 1px solid #ddd;
+        table th, table td {
+            padding: 12px 15px;
             text-align: center;
+            border-bottom: 1px solid #eee;
         }
 
-        th {
-            background-color: #11c0f1;
-            color: #ffffff;
-            font-weight: bold;
-        }
-
-        td {
-            background-color: #f9f9f9;
-            color: #333;
-        }
-
-        .delete-btn {
-            color: #ffffff;
-            background-color: #e74c3c;
-            padding: 5px 10px;
-            text-decoration: none;
-            border-radius: 4px;
+        table th {
+            background-color: #007bff;
+            color: #fff;
+            text-transform: uppercase;
             font-size: 14px;
-            margin-right: 5px; /* Space between buttons */
         }
 
-        .delete-btn:hover {
-            background-color: #c0392b;
+        table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .delete-btn, .edit-btn {
+            padding: 10px 15px;
+            font-size: 14px;
+            text-decoration: none;
+            color: #fff;
+            border-radius: 5px;
+            transition: background 0.3s ease;
         }
 
         .edit-btn {
-            color: #ffffff;
-            background-color: #f39c12;
-            padding: 5px 10px;
-            text-decoration: none;
-            border-radius: 4px;
+            background: #ffc107;
         }
 
         .edit-btn:hover {
-            background-color: #e67e22;
+            background: #e0a800;
+        }
+
+        .delete-btn {
+            background: #dc3545;
+        }
+
+        .delete-btn:hover {
+            background: #c82333;
         }
 
         .add-btn {
-            color: #ffffff;
-            background-color: #28a745; /* Green background */
-            padding: 5px 10px;
-            text-decoration: none;
-            border-radius: 4px;
+            padding: 10px 15px;
             font-size: 14px;
-            margin-left: 10px; /* Space between title and button */
-            float: right; /* Align button to the right */
+            background: #28a745;
+            color: #fff;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            float: right;
         }
 
         .add-btn:hover {
-            background-color: #218838; /* Darker green on hover */
+            background: #218838;
         }
 
-        .section-btn {
-            margin: 10px 0;
-            color: #ffffff;
-            background-color: #2ca4ed;
-            padding: 5px 10px;
-            text-decoration: none;
-            border-radius: 4px;
-        }
-
-        .section-btn:hover {
-            background-color: #1c80b8;
-        }
-
-        .message {
-            padding: 10px;
-            background-color: #ffcc00;
-            color: #333;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
     </style>
 </head>
 <body>
-<header>
-    <h1>HealthTrackAI</h1>
-    <nav>
-        <ul>
-            <li><a href="admin.php"><i class="fas fa-key"></i>Acount User List</a></li>
-            <li><a href="admin_doctor.php" class="section-btn">Doctor list</a></li>
-            <li><a href="schedule_appointment.php" class="section-btn">Schedule Appointment list</a></li>
-            <li><a href="add_doctor.php" class="section-btn">Add Doctor</a></li>
-            <li><a href="add_schedule_appointment.php" class="section-btn">Add Schedule Appointment</a></li>
-            <li><a href="index.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-        </ul>
-    </nav>
-</header>
+    <header>
+        <h1>HealthTrackAI - Customer Management</h1>
+        <nav>
+            <ul>
+                <li><a href="admin.php">User List</a></li>
+                <li><a href="admin_doctor.php">Doctor List</a></li>
+                <li><a href="schedule_appointment.php">Appointments</a></li>
+                <li><a href="add_doctor.php">Add Doctor</a></li>
+                <li><a href="add_schedule_appointment.php" class="section-btn">Add Schedule Appointment</a></li>
+                <li><a href="index.php">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
 
-<div class="table-container">
-    <h2>Customer List</h2>
-    <a href="add.php" class="add-btn">Add Customer</a>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Hotline</th>
-                <th>Gender</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            // Reconnect to the database and fetch results again for displaying customer data
-            $conn = new mysqli($servername, $username, $password, $dbname);
-            if ($result && $result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    echo "<tr>
-                            <td>{$row['id']}</td>
-                            <td>{$row['name']}</td>
-                            <td>{$row['email']}</td>
-                            <td>{$row['contact']}</td>
-                            <td>{$row['gender']}</td>
-                            <td>
-                                <a href='edit.php?id={$row['id']}' class='edit-btn'>Edit</a>
-                                <a href='delete.php?id={$row['id']}' class='delete-btn'>Delete</a>
-                            </td>
-                          </tr>";
-                }
-            } else {
-                echo "<tr><td colspan='6'>No customers found.</td></tr>";
-            }
-            // Close the connection again after use
-            $conn->close();
-            ?>
-        </tbody>
-    </table>
-</div>
+    <div class="table-container">
+        <h2>Customer List</h2>
+        <a href="add_customer.php" class="add-btn">Add Customer</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Hotline</th>
+                    <th>Gender</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                    // Reconnect to the database and fetch results again for displaying customer data
+                    $conn = new mysqli($servername, $username, $password, $dbname);
+                    if ($result && $result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<tr>
+                                    <td>{$row['id']}</td>
+                                    <td>{$row['name']}</td>
+                                    <td>{$row['email']}</td>
+                                    <td>{$row['contact']}</td>
+                                    <td>{$row['gender']}</td>
+                                    <td>
+                                        <a href='edit_customer.php?id={$row['id']}' class='edit-btn'>Edit</a>
+                                        <a href='delete_customer.php?id={$row['id']}' class='delete-btn'>Delete</a>
+                                    </td>
+                                  </tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='6'>No customers found.</td></tr>";
+                    }
+                    // Close the connection again after use
+                    $conn->close();
+                ?>
+            </tbody>
+        </table>
+    </div>
 
 </body>
 </html>
