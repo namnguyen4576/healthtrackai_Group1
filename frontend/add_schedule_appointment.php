@@ -20,6 +20,26 @@ if ($conn->connect_error) {
 $users_result = $conn->query("SELECT name FROM users");
 $doctors_result = $conn->query("SELECT name FROM doctor");
 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $user_name = $_POST['user_name'];
+    $doctor_name = $_POST['doctor_name'];
+    $appointment_date = $_POST['appointment_date'];
+    $phone_number = $_POST['phone_number'];
+    $note = $_POST['note'];
+
+    // Insert the new appointment into the database
+    $sql = "INSERT INTO appointments (user_name, doctor_name, appointment_date, phone_number, note) 
+            VALUES ('$user_name', '$doctor_name', '$appointment_date', '$phone_number', '$note')";
+
+    if ($conn->query($sql) === TRUE) {
+        // Redirect to the schedule_appointment.php page after inserting
+        header("Location: schedule_appointment.php");
+        exit();
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+}
+
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user_name = $_POST['user_name'];
@@ -28,14 +48,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Insert the new appointment into the database
     $sql = "INSERT INTO appointments (user_name, doctor_name, date) VALUES ('$user_name', '$doctor_name', '$appointment_date')";
-
-    if ($conn->query($sql) === TRUE) {
-        // Redirect to appointment list after successful insertion
-        header('Location: appointment_list.php');
-        exit();
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-    }
 }
 
 $conn->close();
@@ -251,19 +263,12 @@ $conn->close();
 
     <div class="form-container">
         <h2>Schedule an Appointment</h2>
-        <form method="POST" action="schedule_appointment.php">
-            <label for="user_name">Select Customer</label>
-            <select id="user_name" name="user_name" required>
-                <?php
-                if ($users_result->num_rows > 0) {
-                    while ($user = $users_result->fetch_assoc()) {
-                        echo "<option value='{$user['name']}'>{$user['name']}</option>";
-                    }
-                } else {
-                    echo "<option value=''>No customers found</option>";
-                }
-                ?>
-            </select>
+        <form method="POST" action="add_schedule_appointment.php">
+        <label for="user_name">Customer</label>
+        <input type="text" id="user_name" name="user_name" required list="user_list">
+
+            <label for="phone_number">Phone Number</label>
+            <input type="text" id="phone_number" name="phone_number">
 
             <label for="doctor_name">Select Doctor</label>
             <select id="doctor_name" name="doctor_name" required>
@@ -280,6 +285,11 @@ $conn->close();
 
             <label for="appointment_date">Appointment Date</label>
             <input type="datetime-local" id="appointment_date" name="appointment_date" required>
+
+            
+
+            <label for="note">Note</label>
+            <input type="text" id="note" name="note">
 
             <button type="submit">Schedule Appointment</button>
         </form>

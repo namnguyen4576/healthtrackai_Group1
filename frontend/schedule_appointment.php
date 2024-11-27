@@ -12,27 +12,35 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Kiểm tra nếu form đã được gửi
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $user_name = $_POST['user_name'];
-    $doctor_name = $_POST['doctor_name'];
-    $appointment_date = $_POST['appointment_date'];
+    // Lấy dữ liệu từ form
+    $user_name = isset($_POST['user_name']) ? $_POST['user_name'] : '';
+    $doctor_name = isset($_POST['doctor_name']) ? $_POST['doctor_name'] : '';
+    $appointment_date = isset($_POST['appointment_date']) ? $_POST['appointment_date'] : '';
+    $phone_number = isset($_POST['phone_number']) ? $_POST['phone_number'] : '';
+    $note = isset($_POST['note']) ? $_POST['note'] : '';
 
-    // Thêm lịch hẹn vào cơ sở dữ liệu
-    $sql = "INSERT INTO appointments (user_name, doctor_name, date) 
-            VALUES ('$user_name', '$doctor_name', '$appointment_date')";
+    // Kiểm tra giá trị trước khi chèn
+    if (!empty($user_name) && !empty($doctor_name) && !empty($appointment_date)) {
+        $stmt = $conn->prepare("INSERT INTO appointments (user_name, doctor_name, appointment_date, phone_number, note) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssss", $user_name, $doctor_name, $appointment_date, $phone_number, $note);
 
-    if ($conn->query($sql) === TRUE) {
-        // Chuyển hướng về trang danh sách lịch hẹn sau khi thêm thành công
-        header('Location: schedule_appointment.php');
-        exit();
+        if ($stmt->execute()) {
+            
+        } else {
+            echo "Error: " . $stmt->error;
+        }
+
+        $stmt->close();
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo "Please fill in all required fields.";
     }
 }
 
+
 // Lấy danh sách các lịch hẹn từ cơ sở dữ liệu
-$appointments_result = $conn->query("SELECT id, user_name, doctor_name, date FROM appointments");
+$query = "SELECT id, user_name, doctor_name, appointment_date, phone_number, note FROM appointments";
+$appointments_result = $conn->query($query);
 
 $conn->close();
 ?>
@@ -186,31 +194,36 @@ $conn->close();
                 <tr>
                     <th>ID</th>
                     <th>Customer</th>
+                    <th>Phone Number</th>
                     <th>Doctor</th>
                     <th>Date</th>
+                    <th>Note</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <?php
-                if ($appointments_result->num_rows > 0) {
-                    while ($appointment = $appointments_result->fetch_assoc()) {
-                        echo "<tr>";
-                        echo "<td>{$appointment['id']}</td>";
-                        echo "<td>{$appointment['user_name']}</td>";
-                        echo "<td>{$appointment['doctor_name']}</td>";
-                        echo "<td>{$appointment['date']}</td>";
-                        echo "<td>
-                                <a href='edit_appointment.php?id={$appointment['id']}' class='btn edit-btn'>Edit</a>
-                                <a href='delete_appointment.php?id={$appointment['id']}' class='btn delete-btn'>Delete</a>
-                              </td>";
-                        echo "</tr>";
-                    }
-                } else {
-                    echo "<tr><td colspan='5'>No appointments found</td></tr>";
-                }
-                ?>
-            </tbody>
+    <?php
+    if ($appointments_result && $appointments_result->num_rows > 0) {
+        while ($appointment = $appointments_result->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td>" . $appointment['id'] . "</td>";
+            echo "<td>" . $appointment['user_name'] . "</td>";
+            echo "<td>" . $appointment['phone_number'] . "</td>";
+            echo "<td>" . $appointment['doctor_name'] . "</td>";
+            echo "<td>" . $appointment['appointment_date'] . "</td>";
+            echo "<td>" . $appointment['note'] . "</td>";
+            echo "<td>
+                    <a href='edit_appointment.php?id=" . $appointment['id'] . "' class='btn edit-btn'>Edit</a>
+                    <a href='delete_appointment.php?id=" . $appointment['id'] . "' class='btn delete-btn' onclick='return confirm(\"Are you sure you want to delete this appointment?\");'>Delete</a>
+                  </td>";
+            echo "</tr>";
+        }
+    } else {
+        echo "<tr><td colspan='7'>No appointments found.</td></tr>";
+    }
+    ?>
+</tbody>
+
         </table>
     </div>
 </body>

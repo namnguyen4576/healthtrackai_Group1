@@ -5,6 +5,8 @@ require 'configs/database.php';
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+$userError = $adminError = ""; // Biến để lưu lỗi
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['user-email'])) {
         // Xử lý đăng nhập của người dùng
@@ -27,13 +29,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 header("Location: home.php"); // Chuyển đến trang người dùng
                 exit();
             } else {
-                echo "<script>alert('Incorrect password for user. Please try again.');</script>";
+                $userError = "Incorrect password. Please try again.";
             }
         } else {
-            echo "<script>alert('No user found with this email.');</script>";
+            $userError = "No user found with this email.";
         }
         $stmt->close();
-
     } elseif (isset($_POST['admin_id'])) {
         // Xử lý đăng nhập cho Admin với tài khoản cố định
         $admin_id = $_POST['admin_id'];
@@ -47,13 +48,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             header("Location: admin.php"); // Chuyển đến trang Admin
             exit();
         } else {
-            echo "<script>alert('Incorrect admin credentials. Please try again.');</script>";
+            $adminError = "Incorrect admin credentials. Please try again.";
         }
     }
     $conn->close();
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <body>
     <header>
-    <h1><a href="landing.php" style="color: white; text-decoration: none;">HealthTrackAI</a></h1>
+        <h1><a href="landing.php" style="color: white; text-decoration: none;">HealthTrackAI</a></h1>
         <nav>
             <ul>
                 <li><a href="landing.php"><i class="fas fa-home"></i> HOME</a></li>
@@ -98,6 +98,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <input type="password" id="admin-password" name="admin-password" required>
                 </div>
                 <button type="submit">LOGIN</button>
+                <?php if ($adminError): ?>
+                    <p class="error-message"><?php echo $adminError; ?></p>
+                <?php endif; ?>
             </form>
         </section>
 
@@ -113,6 +116,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <input type="password" id="user-password" name="user-password" required>
                 </div>
                 <button type="submit">LOGIN</button>
+                <?php if ($userError): ?>
+                    <p class="error-message"><?php echo $userError; ?></p>
+                <?php endif; ?>
                 <p>Not registered? <a href="register.php">Create an account</a></p>
             </form>
         </section>

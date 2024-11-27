@@ -1,9 +1,19 @@
 <?php
-session_start();
-if (!isset($_SESSION['user_name'])) {
-  header("Location: index.php");
-  exit();
+// Kết nối cơ sở dữ liệu
+$servername = "127.0.0.1";
+$username = "root";
+$password = "";
+$dbname = "healthtrackai";
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Kiểm tra kết nối
+if ($conn->connect_error) {
+  die("Kết nối thất bại: " . $conn->connect_error);
 }
+
+// Lấy dữ liệu bác sĩ
+$sql = "SELECT id, name, specialty, qualification, gender, age, nickname, image FROM doctor";
+$result = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -17,50 +27,59 @@ if (!isset($_SESSION['user_name'])) {
 </head>
 
 <style>
-  /* Reset some default styles */
+  /* Reset and general styles */
   * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    color: #333;
-    background-color: #f4f7fc;
-  }
+    body {
+      font-family: 'Arial', sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: #f4f7fc;
+    }
 
-  /* Header */
-  header {
-    background-color: #007bff;
-    color: #fff;
-    padding: 1rem;
-    text-align: center;
-  }
+    header {
+      background-color: #007bff;
+      color: #fff;
+      padding: 1.5rem;
+      text-align: center;
+    }
 
-  header h1 {
-    margin-bottom: 0.5rem;
-    font-size: 1.8rem;
-  }
+    header h1 {
+      margin-bottom: 1rem;
+      font-size: 3rem;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
 
-  header nav ul {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-  }
+    header nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+    }
 
-  header nav ul li a {
-    color: #fff;
-    text-decoration: none;
-    font-weight: bold;
-    padding: 0.5rem 1rem;
-  }
+    header nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 0.7rem 1.5rem;
+      border-radius: 5px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
 
-  header nav ul li a.active {
-    text-decoration: underline;
-  }
+    header nav ul li a:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+      color: #fff;
+    }
+
+    header nav ul li a.active {
+      text-decoration: underline;
+      font-style: italic;
+    }
 
   /* Main content */
   main {
@@ -198,16 +217,18 @@ if (!isset($_SESSION['user_name'])) {
     <section class="highlighted-doctors">
       <h2>Bác sĩ Nổi Bật</h2>
       <div class="doctor-cards">
-        <div class="doctor-card">
-          <img src="assets/images/doctor1.jpg" alt="Doctor Image">
-          <h3>Dr. Nguyễn Văn A</h3>
-          <p>Chuyên khoa Tim mạch</p>
-        </div>
-        <div class="doctor-card">
-          <img src="assets/images/doctor2.jpg" alt="Doctor Image">
-          <h3>Dr. Trần Thị B</h3>
-          <p>Chuyên khoa Nội tiết</p>
-        </div>
+      <?php
+        // Hiển thị bác sĩ từ cơ sở dữ liệu
+        while ($row = mysqli_fetch_assoc($result)) {
+            echo '<div class="doctor-card">';
+            echo "<img src='" . $row['image'] . "' alt='Doctor Image'>";
+              echo "<h3>" . $row['name'] . "</h3>";
+              echo "<p>Specialty: " . $row['specialty'] . "</p>";
+              echo "<p>Qualification: " . $row['qualification'] . "</p>";
+              echo "<p>Age: " . $row['age'] . "</p>";
+            echo '</div>';
+        }
+        ?>
       </div>
     </section>
 
@@ -233,6 +254,12 @@ if (!isset($_SESSION['user_name'])) {
       </div>
     </section>
   </main>
+
+  <script src="https://app.tudongchat.com/js/chatbox.js"></script>
+  <script>
+    const tudong_chatbox = new TuDongChat('CyClSG4NxJEVI2oYs5AQF')
+    tudong_chatbox.initial()
+  </script>
 </body>
 
 </html>

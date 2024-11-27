@@ -37,51 +37,59 @@ $conn->close();
     <link rel="stylesheet" href="">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-    /* Các style chung */
+    /* Reset and general styles */
     * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
     body {
-        font-family: Arial, sans-serif;
-        line-height: 1.6;
-        color: #333;
-        background-color: #f4f7fc;
+      font-family: 'Arial', sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: #f4f7fc;
     }
 
-    /* Header */
     header {
-        background-color: #007bff;
-        color: #fff;
-        padding: 1rem;
-        text-align: center;
+      background-color: #007bff;
+      color: #fff;
+      padding: 1.5rem;
+      text-align: center;
     }
 
     header h1 {
-        margin-bottom: 0.5rem;
-        font-size: 1.8rem;
+      margin-bottom: 1rem;
+      font-size: 3rem;
+      font-weight: bold;
+      text-transform: uppercase;
     }
 
     header nav ul {
-        list-style: none;
-        display: flex;
-        justify-content: center;
-        gap: 1.5rem;
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
     }
 
     header nav ul li a {
-        color: #fff;
-        text-decoration: none;
-        font-weight: bold;
-        padding: 0.5rem 1rem;
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 0.7rem 1.5rem;
+      border-radius: 5px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    header nav ul li a:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+      color: #fff;
     }
 
     header nav ul li a.active {
-        text-decoration: underline;
+      text-decoration: underline;
+      font-style: italic;
     }
-
     /* Main Content */
     main {
         padding: 80px 20px 20px 20px; /* Thêm padding để tránh bị che khuất bởi header */
