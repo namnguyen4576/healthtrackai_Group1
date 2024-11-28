@@ -283,7 +283,7 @@ $conn->close();
                 ?>
             </select>
 
-            <label for="appointment_date">Appointment Date</label>
+            <label for="appointment_date">Appointment Date & Time</label>
             <input type="datetime-local" id="appointment_date" name="appointment_date" required>
 
             

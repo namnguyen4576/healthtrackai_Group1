@@ -205,19 +205,20 @@ $conn->close();
     <?php
     if ($appointments_result && $appointments_result->num_rows > 0) {
         while ($appointment = $appointments_result->fetch_assoc()) {
+            $formatted_date = date("d-m-Y H:i", strtotime($appointment['appointment_date'])); // Định dạng ngày giờ
             echo "<tr>";
             echo "<td>" . $appointment['id'] . "</td>";
             echo "<td>" . $appointment['user_name'] . "</td>";
             echo "<td>" . $appointment['phone_number'] . "</td>";
             echo "<td>" . $appointment['doctor_name'] . "</td>";
-            echo "<td>" . $appointment['appointment_date'] . "</td>";
+            echo "<td>" . $formatted_date . "</td>";
             echo "<td>" . $appointment['note'] . "</td>";
             echo "<td>
                     <a href='edit_appointment.php?id=" . $appointment['id'] . "' class='btn edit-btn'>Edit</a>
                     <a href='delete_appointment.php?id=" . $appointment['id'] . "' class='btn delete-btn' onclick='return confirm(\"Are you sure you want to delete this appointment?\");'>Delete</a>
                   </td>";
             echo "</tr>";
-        }
+        }        
     } else {
         echo "<tr><td colspan='7'>No appointments found.</td></tr>";
     }

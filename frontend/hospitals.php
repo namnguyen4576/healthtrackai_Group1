@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $user_name = $_POST['user_name'];
   $phone_number = $_POST['phone_number'];
   $doctor_name = $_POST['doctor_name'];
-  $appointment_date = $_POST['appointment_date'];
+  $appointment_datetime = $_POST['appointment_datetime']; // Nhận giá trị ngày & giờ
   $note = $_POST['note'];
 
   // Xử lý lưu thông tin đặt lịch vào cơ sở dữ liệu
@@ -53,7 +53,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   }
 
   $stmt = $conn->prepare("INSERT INTO appointments (user_name, phone_number, doctor_name, appointment_date, note) VALUES (?, ?, ?, ?, ?)");
-  $stmt->bind_param("sssss", $user_name, $phone_number, $doctor_name, $appointment_date, $note);
+  $stmt->bind_param("sssss", $user_name, $phone_number, $doctor_name, $appointment_datetime, $note);
+
 
   if ($stmt->execute()) {
     $success_message = "Appointment scheduled successfully!";
@@ -75,58 +76,67 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <title>HealthTrackAI - Book Appointment</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    /* Reset and general styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    body {
-      font-family: 'Arial', sans-serif;
-      line-height: 1.6;
-      color: #333;
-      background-color: #f4f7fc;
-    }
+body {
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f4f7fc;
+}
 
-    header {
-      background-color: #007bff;
-      color: #fff;
-      padding: 1.5rem;
-      text-align: center;
-    }
+header {
+  background-color: #007bff;
+  color: #fff;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between; /* Căn trái logo, phải menu */
+  align-items: center; /* Căn giữa theo chiều dọc */
+}
 
-    header h1 {
-      margin-bottom: 1rem;
-      font-size: 3rem;
-      font-weight: bold;
-      text-transform: uppercase;
-    }
+header img.logo {
+  max-height: 80px; /* Thay đổi chiều cao tối đa của logo */
+  width: auto;      /* Giữ tỉ lệ kích thước hình ảnh */
+}
 
-    header nav ul {
-      list-style: none;
-      display: flex;
-      justify-content: center;
-      gap: 2.5rem;
-    }
+header nav {
+  flex-grow: 1; /* Để menu chiếm hết không gian còn lại */
+  display: flex;
+  justify-content: flex-end; /* Căn menu về bên phải */
+}
 
-    header nav ul li a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: bold;
-      padding: 0.7rem 1.5rem;
-      border-radius: 5px;
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
+header nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: flex-end; /* Đảm bảo menu nằm bên phải */
+  gap: 2.5rem;
+}
 
-    header nav ul li a:hover {
-      background-color: rgba(255, 255, 255, 0.3);
-      color: #fff;
-    }
+header nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 0.7rem 1.5rem;
+  font-size: 1.1rem;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
 
-    header nav ul li a.active {
-      text-decoration: underline;
-      font-style: italic;
-    }
+header nav ul li a:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  color: #fff;
+}
+
+header nav ul li a.active {
+  text-decoration: underline;
+  font-style: italic;
+}
+
 
     main {
       background-color: #f4f7fa;
@@ -227,13 +237,64 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       .appointment-form {
         padding: 15px;
       }
+
+      .alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+}
+
+/* Animation cho sự xuất hiện của thông báo */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Phong cách cho thông báo thành công */
+.alert.success {
+  background-color: #4CAF50;
+  color: white;
+  border: 1px solid #45a049;
+}
+
+/* Phong cách cho thông báo lỗi */
+.alert.error {
+  background-color: #f44336;
+  color: white;
+  border: 1px solid #e53935;
+}
+
+/* Nếu có lỗi, thông báo sẽ hiển thị trong 5 giây và tự động biến mất */
+.alert.success, .alert.error {
+  animation: fadeOut 0.5s 4.5s forwards;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
     }
   </style>
 </head>
 
 <body>
   <header>
-    <h1>HealthTrackAI</h1>
+  <img src="assets\images\logo.jpg" alt="HealthTrackAI Logo" class="logo">
     <nav>
       <ul>
         <li><a href="home.php" class="<?= basename($_SERVER['PHP_SELF']) == 'home.php' ? 'active' : '' ?>"><i class="fas fa-home"></i> HOME</a></li>
@@ -274,13 +335,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           </select>
         </div>
         <div class="form-group">
-          <label for="appointment-date">Appointment Date:</label>
-          <input type="date" id="appointment-date" name="appointment_date" required>
+          <label for="appointment-datetime">Appointment Date & Time:</label>
+          <input type="datetime-local" id="appointment-datetime" name="appointment_datetime" required>
         </div>
+
         <div class="form-group">
           <label for="note">Enter the health problem you need to examine:</label>
-          <textarea id="note" name="note" placeholder="Enter any special requests or notes"></textarea>
+          <textarea id="note" name="note" placeholder="Enter any special requests or notes" required></textarea>
         </div>
+
         <button type="submit">Confirm Appointment</button>
       </form>
     </section>
@@ -291,5 +354,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <p>Address: 123 Health St, Wellness City, Healthy Country</p>
   </footer>
 </body>
+
+<script>
+  // Hàm để ẩn thông báo sau 5 giây
+  setTimeout(function() {
+    var alert = document.querySelector('.alert');
+    if (alert) {
+      alert.style.display = 'none';
+    }
+  }, 5000); // 5000ms = 5 giây
+</script>
+
 
 </html>

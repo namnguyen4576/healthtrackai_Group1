@@ -9,7 +9,7 @@
 </head>
 <body>
     <header>
-        <h1>HealthTrackAI</h1>
+    <img src="assets\images\logo.jpg" alt="HealthTrackAI Logo" class="logo">
         <nav>
             <ul>
                 <li><a href="#features">Features</a></li>

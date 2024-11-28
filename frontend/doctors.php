@@ -45,20 +45,33 @@ $result = $conn->query($sql);
       background-color: #007bff;
       color: #fff;
       padding: 1.5rem;
-      text-align: center;
+      display: flex;
+      justify-content: space-between;
+      /* Căn trái logo, phải menu */
+      align-items: center;
+      /* Căn giữa theo chiều dọc */
     }
 
-    header h1 {
-      margin-bottom: 1rem;
-      font-size: 3rem;
-      font-weight: bold;
-      text-transform: uppercase;
+    header img.logo {
+      max-height: 80px;
+      /* Thay đổi chiều cao tối đa của logo */
+      width: auto;
+      /* Giữ tỉ lệ kích thước hình ảnh */
+    }
+
+    header nav {
+      flex-grow: 1;
+      /* Để menu chiếm hết không gian còn lại */
+      display: flex;
+      justify-content: flex-end;
+      /* Căn menu về bên phải */
     }
 
     header nav ul {
       list-style: none;
       display: flex;
-      justify-content: center;
+      justify-content: flex-end;
+      /* Đảm bảo menu nằm bên phải */
       gap: 2.5rem;
     }
 
@@ -67,6 +80,7 @@ $result = $conn->query($sql);
       text-decoration: none;
       font-weight: bold;
       padding: 0.7rem 1.5rem;
+      font-size: 1.1rem;
       border-radius: 5px;
       transition: background-color 0.3s ease, color 0.3s ease;
     }
@@ -201,7 +215,7 @@ $result = $conn->query($sql);
 
 <body>
   <header>
-    <h1>HealthTrackAI</h1>
+  <img src="assets\images\logo.jpg" alt="HealthTrackAI Logo" class="logo">
     <nav>
       <ul>
         <li><a href="home.php"><i class="fas fa-home"></i> HOME</a></li>

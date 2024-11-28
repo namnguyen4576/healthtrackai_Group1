@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $userError = "No user found with this email.";
         }
         $stmt->close();
-    } elseif (isset($_POST['admin_id'])) {
+    } else if (isset($_POST['admin_id'])) {
         // Xử lý đăng nhập cho Admin với tài khoản cố định
         $admin_id = $_POST['admin_id'];
         $admin_password = $_POST['admin-password'];
