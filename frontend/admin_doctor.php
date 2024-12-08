@@ -218,7 +218,7 @@ $result = $conn->query($sql);
                             <td><?= $row['nickname'] ?></td>
                             <td><img src="<?= $row['image'] ?>" alt="Doctor Image"></td>
                             <td>
-                                <a href="admin_doctor_edit.php?id=<?= $row['id'] ?>" class="btn edit-btn">Edit</a>
+                                <a href="edit_doctor.php?id=<?= $row['id'] ?>" class="btn edit-btn">Edit</a>
                                 <a href="delete_doctor.php?id=<?= $row['id'] ?>" class="btn delete-btn">Delete</a>
                             </td>
                         </tr>

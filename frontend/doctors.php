@@ -29,71 +29,71 @@ $result = $conn->query($sql);
 <style>
   /* Reset and general styles */
   * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-    body {
-      font-family: 'Arial', sans-serif;
-      line-height: 1.6;
-      color: #333;
-      background-color: #f4f7fc;
-    }
+  body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f7fc;
+  }
 
-    header {
-      background-color: #007bff;
-      color: #fff;
-      padding: 1.5rem;
-      display: flex;
-      justify-content: space-between;
-      /* Căn trái logo, phải menu */
-      align-items: center;
-      /* Căn giữa theo chiều dọc */
-    }
+  header {
+    background-color: #007bff;
+    color: #fff;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    /* Căn trái logo, phải menu */
+    align-items: center;
+    /* Căn giữa theo chiều dọc */
+  }
 
-    header img.logo {
-      max-height: 80px;
-      /* Thay đổi chiều cao tối đa của logo */
-      width: auto;
-      /* Giữ tỉ lệ kích thước hình ảnh */
-    }
+  header img.logo {
+    max-height: 80px;
+    /* Thay đổi chiều cao tối đa của logo */
+    width: auto;
+    /* Giữ tỉ lệ kích thước hình ảnh */
+  }
 
-    header nav {
-      flex-grow: 1;
-      /* Để menu chiếm hết không gian còn lại */
-      display: flex;
-      justify-content: flex-end;
-      /* Căn menu về bên phải */
-    }
+  header nav {
+    flex-grow: 1;
+    /* Để menu chiếm hết không gian còn lại */
+    display: flex;
+    justify-content: flex-end;
+    /* Căn menu về bên phải */
+  }
 
-    header nav ul {
-      list-style: none;
-      display: flex;
-      justify-content: flex-end;
-      /* Đảm bảo menu nằm bên phải */
-      gap: 2.5rem;
-    }
+  header nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    /* Đảm bảo menu nằm bên phải */
+    gap: 2.5rem;
+  }
 
-    header nav ul li a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: bold;
-      padding: 0.7rem 1.5rem;
-      font-size: 1.1rem;
-      border-radius: 5px;
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
+  header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 0.7rem 1.5rem;
+    font-size: 1.1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
 
-    header nav ul li a:hover {
-      background-color: rgba(255, 255, 255, 0.3);
-      color: #fff;
-    }
+  header nav ul li a:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    color: #fff;
+  }
 
-    header nav ul li a.active {
-      text-decoration: underline;
-      font-style: italic;
-    }
+  header nav ul li a.active {
+    text-decoration: underline;
+    font-style: italic;
+  }
 
   /* Main content */
   main {
@@ -191,6 +191,20 @@ $result = $conn->query($sql);
     transform: translateY(-5px);
   }
 
+  footer {
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    width: 100%;
+    margin-top: auto;
+  }
+
+  footer p {
+    margin: 0;
+    font-size: 14px;
+  }
+
   /* Responsive styling */
   @media (max-width: 768px) {
     header nav ul {
@@ -215,7 +229,7 @@ $result = $conn->query($sql);
 
 <body>
   <header>
-  <img src="assets\images\logo.jpg" alt="HealthTrackAI Logo" class="logo">
+    <img src="assets\images\logo.jpg" alt="HealthTrackAI Logo" class="logo">
     <nav>
       <ul>
         <li><a href="home.php"><i class="fas fa-home"></i> HOME</a></li>
@@ -229,45 +243,51 @@ $result = $conn->query($sql);
 
   <main>
     <section class="highlighted-doctors">
-      <h2>Bác sĩ Nổi Bật</h2>
+      <h2>Featured Doctors</h2>
       <div class="doctor-cards">
-      <?php
-        // Hiển thị bác sĩ từ cơ sở dữ liệu
+        <?php
+        // Display doctors from the database
         while ($row = mysqli_fetch_assoc($result)) {
-            echo '<div class="doctor-card">';
-            echo "<img src='" . $row['image'] . "' alt='Doctor Image'>";
-              echo "<h3>" . $row['name'] . "</h3>";
-              echo "<p>Specialty: " . $row['specialty'] . "</p>";
-              echo "<p>Qualification: " . $row['qualification'] . "</p>";
-              echo "<p>Age: " . $row['age'] . "</p>";
-            echo '</div>';
+          echo '<div class="doctor-card">';
+          echo "<img src='" . $row['image'] . "' alt='Doctor Image'>";
+          echo "<h3>" . $row['name'] . "</h3>";
+          echo "<p>Specialty: " . $row['specialty'] . "</p>";
+          echo "<p>Qualification: " . $row['qualification'] . "</p>";
+          echo "<p>Age: " . $row['age'] . "</p>";
+          echo '</div>';
         }
         ?>
       </div>
     </section>
 
     <section class="departments">
-      <h2>Giới thiệu về các Khoa</h2>
+      <h2>Introduction to Departments</h2>
       <div class="department-grid">
         <div class="department-card">
-          <h3>Tim mạch</h3>
-          <p>Khoa Tim mạch chuyên về chẩn đoán và điều trị các bệnh liên quan đến tim mạch.</p>
+          <h3>Cardiology</h3>
+          <p>The Cardiology Department specializes in diagnosing and treating cardiovascular diseases.</p>
         </div>
         <div class="department-card">
-          <h3>Nội tiết</h3>
-          <p>Khoa Nội tiết tập trung vào các bệnh về hormone và các rối loạn nội tiết.</p>
+          <h3>Endocrinology</h3>
+          <p>The Endocrinology Department focuses on hormonal disorders and endocrine diseases.</p>
         </div>
         <div class="department-card">
-          <h3>Thần kinh</h3>
-          <p>Khoa Thần kinh chuyên chăm sóc và điều trị các bệnh về hệ thần kinh.</p>
+          <h3>Neurology</h3>
+          <p>The Neurology Department provides care and treatment for nervous system disorders.</p>
         </div>
         <div class="department-card">
-          <h3>Chấn thương chỉnh hình</h3>
-          <p>Khoa Chấn thương chỉnh hình cung cấp các phương pháp điều trị xương khớp và cơ bắp.</p>
+          <h3>Orthopedics</h3>
+          <p>The Orthopedics Department offers treatments for bone, joint, and muscular issues.</p>
         </div>
       </div>
     </section>
   </main>
+
+
+  <footer>
+    <p>Contact us: 123-456-7890 | Email: info@healthtrackai.com</p>
+    <p>Address: 123 Health St, Wellness City, Healthy Country</p>
+  </footer>
 
   <script src="https://app.tudongchat.com/js/chatbox.js"></script>
   <script>
@@ -275,5 +295,5 @@ $result = $conn->query($sql);
     tudong_chatbox.initial()
   </script>
 </body>
-
+        
 </html>

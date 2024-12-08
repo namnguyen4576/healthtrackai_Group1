@@ -26,7 +26,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->bind_param("sssss", $user_name, $doctor_name, $appointment_date, $phone_number, $note);
 
         if ($stmt->execute()) {
-            
         } else {
             echo "Error: " . $stmt->error;
         }
@@ -47,6 +46,7 @@ $conn->close();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -128,7 +128,8 @@ $conn->close();
             margin-top: 15px;
         }
 
-        table th, table td {
+        table th,
+        table td {
             padding: 12px 15px;
             text-align: center;
             border-bottom: 1px solid #eee;
@@ -172,6 +173,7 @@ $conn->close();
         }
     </style>
 </head>
+
 <body>
     <header>
         <h1>HealthTrackAI - Schedule Appointment</h1>
@@ -202,30 +204,32 @@ $conn->close();
                 </tr>
             </thead>
             <tbody>
-    <?php
-    if ($appointments_result && $appointments_result->num_rows > 0) {
-        while ($appointment = $appointments_result->fetch_assoc()) {
-            $formatted_date = date("d-m-Y H:i", strtotime($appointment['appointment_date'])); // Định dạng ngày giờ
-            echo "<tr>";
-            echo "<td>" . $appointment['id'] . "</td>";
-            echo "<td>" . $appointment['user_name'] . "</td>";
-            echo "<td>" . $appointment['phone_number'] . "</td>";
-            echo "<td>" . $appointment['doctor_name'] . "</td>";
-            echo "<td>" . $formatted_date . "</td>";
-            echo "<td>" . $appointment['note'] . "</td>";
-            echo "<td>
-                    <a href='edit_appointment.php?id=" . $appointment['id'] . "' class='btn edit-btn'>Edit</a>
-                    <a href='delete_appointment.php?id=" . $appointment['id'] . "' class='btn delete-btn' onclick='return confirm(\"Are you sure you want to delete this appointment?\");'>Delete</a>
-                  </td>";
-            echo "</tr>";
-        }        
-    } else {
-        echo "<tr><td colspan='7'>No appointments found.</td></tr>";
-    }
-    ?>
-</tbody>
+                <?php
+                if ($appointments_result && $appointments_result->num_rows > 0) {
+                    while ($appointment = $appointments_result->fetch_assoc()) {
+                        $formatted_date = date("d-m-Y H:i", strtotime($appointment['appointment_date'])); // Định dạng ngày giờ
+                        echo "<tr>";
+                        echo "<td>" . $appointment['id'] . "</td>";
+                        echo "<td>" . $appointment['user_name'] . "</td>";
+                        echo "<td>" . $appointment['phone_number'] . "</td>";
+                        echo "<td>" . $appointment['doctor_name'] . "</td>";
+                        echo "<td>" . $formatted_date . "</td>";
+                        echo "<td>" . $appointment['note'] . "</td>";
+                        echo "<td>
+        <a href='edit_appointment.php?id=" . $appointment['id'] . "' class='btn edit-btn'>Edit</a>
+        <a href='delete_appointment.php?id=" . $appointment['id'] . "' class='btn delete-btn'>Delete</a>
+      </td>";
+
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='7'>No appointments found.</td></tr>";
+                }
+                ?>
+            </tbody>
 
         </table>
     </div>
 </body>
+
 </html>

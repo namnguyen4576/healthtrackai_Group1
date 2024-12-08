@@ -535,26 +535,26 @@ $result = $conn->query($sql);
       </section>
       <!-- News Section -->
       <section>
-        <h2>Tin tức</h2>
+        <h2>News</h2>
         <div class="news">
           <div class="news-card">
-            <h3>Ứng dụng AI trong y tế</h3>
-            <p>Khám phá những xu hướng mới nhất trong ứng dụng AI vào quản lý sức khỏe.</p>
+            <h3>AI Applications in Healthcare</h3>
+            <p>Explore the latest trends in applying AI to health management.</p>
           </div>
           <div class="news-card">
-            <h3>Cập nhật công nghệ</h3>
-            <p>HealthTrackAI ra mắt tính năng mới, giúp người dùng theo dõi sức khỏe dễ dàng hơn.</p>
+            <h3>Technology Updates</h3>
+            <p>HealthTrackAI launches new features, making health tracking easier for users.</p>
           </div>
           <div class="news-card">
-            <h3>Hội thảo y tế 2024</h3>
-            <p>Tham gia hội thảo y tế với sự góp mặt của các chuyên gia đầu ngành.</p>
+            <h3>2024 Healthcare Conference</h3>
+            <p>Join the healthcare conference featuring leading industry experts.</p>
           </div>
         </div>
       </section>
 
       <!-- Partners Section -->
       <section>
-        <h2>Đối tác hợp tác</h2>
+        <h2>Partner Collaborations</h2>
         <div class="partners">
           <img src="assets/images/partner1.png" alt="Partner 1" class="partner-logo">
           <img src="assets/images/partner2.png" alt="Partner 2" class="partner-logo">
@@ -564,22 +564,23 @@ $result = $conn->query($sql);
 
       <!-- Special Services Section -->
       <section>
-        <h2>Dịch vụ đặc biệt</h2>
+        <h2>Special Services</h2>
         <div class="services">
           <div class="service">
-            <h3>Khám từ xa</h3>
-            <p>Liên lạc với bác sĩ mọi lúc mọi nơi qua ứng dụng.</p>
+            <h3>Telemedicine</h3>
+            <p>Connect with doctors anytime, anywhere through the app.</p>
           </div>
           <div class="service">
-            <h3>Phân tích sức khỏe AI</h3>
-            <p>Nhận báo cáo sức khỏe chi tiết dựa trên dữ liệu của bạn.</p>
+            <h3>AI Health Analysis</h3>
+            <p>Receive detailed health reports based on your data.</p>
           </div>
           <div class="service">
-            <h3>Theo dõi sức khỏe 24/7</h3>
-            <p>Hệ thống giám sát sức khỏe liên tục giúp bạn an tâm hơn.</p>
+            <h3>24/7 Health Monitoring</h3>
+            <p>A continuous health monitoring system for your peace of mind.</p>
           </div>
         </div>
       </section>
+
   </div>
 
   <footer>

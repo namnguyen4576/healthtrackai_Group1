@@ -1,14 +1,10 @@
 <?php
-// Start the session
+// Start session and connect to database
 session_start();
-
-// Connect to the database
 $servername = "127.0.0.1";
 $username = "root";
 $password = "";
 $dbname = "healthtrackai";
-
-// Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check connection
@@ -16,152 +12,223 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Fetch user data for editing
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-    $sql = "SELECT name, email, contact, gender FROM users WHERE id = ?";
+// Get customer ID from URL
+$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+
+// Fetch customer data
+$user = [];
+if ($id > 0) {
+    $sql = "SELECT * FROM users WHERE id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id);
     $stmt->execute();
     $result = $stmt->get_result();
-    $user = $result->fetch_assoc();
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+    } else {
+        die("Customer not found.");
+    }
+    $stmt->close();
 }
 
-// Handle form submission
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+// Update customer data when form is submitted
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $name = $_POST['name'];
     $email = $_POST['email'];
     $contact = $_POST['contact'];
     $gender = $_POST['gender'];
     $password = $_POST['password'];
 
-    // Hash the password if it's provided
-    $hashedPassword = !empty($password) ? password_hash($password, PASSWORD_DEFAULT) : null;
-
-    if ($hashedPassword) {
-        $updateSql = "UPDATE users SET name = ?, email = ?, contact = ?, gender = ?, password = ? WHERE id = ?";
-        $stmt = $conn->prepare($updateSql);
-        $stmt->bind_param("sssssi", $name, $email, $contact, $gender, $hashedPassword, $id);
+    // Prepare SQL for update
+    if (!empty($password)) {
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $sql = "UPDATE users SET name=?, email=?, contact=?, gender=?, password=? WHERE id=?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sssssi", $name, $email, $contact, $gender, $hashed_password, $id);
     } else {
-        $updateSql = "UPDATE users SET name = ?, email = ?, contact = ?, gender = ? WHERE id = ?";
-        $stmt = $conn->prepare($updateSql);
+        $sql = "UPDATE users SET name=?, email=?, contact=?, gender=? WHERE id=?";
+        $stmt = $conn->prepare($sql);
         $stmt->bind_param("ssssi", $name, $email, $contact, $gender, $id);
     }
 
+    // Execute the statement
     if ($stmt->execute()) {
-        header("Location: admin.php"); // Redirect to the customer list
-        exit();
+        echo "<script>alert('Customer updated successfully!'); window.location.href = 'admin.php';</script>";
     } else {
-        echo "Error updating customer information.";
+        echo "Error updating customer: " . $conn->error;
     }
+    $stmt->close();
 }
+
+// Close connection
+$conn->close();
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Customer</title>
-    <link rel="stylesheet" href="assets/css/home.css">
+    <title>HealthTrackAI - Edit Customer</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* Reset */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
 
-        /* Body Style */
         body {
-            background-color: #f4f4f4;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            background: #f4f6f9;
+            color: #333;
+            padding: 20px;
             min-height: 100vh;
-            padding-top: 70px;
         }
 
-        /* Header */
         header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 15px;
-            background-color: #2ca4ed;
-            color: #ffffff;
+            background-color: #007bff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            color: #fff;
+            margin-bottom: 20px;
             text-align: center;
-            z-index: 1000;
         }
 
         header h1 {
-            margin: 0;
-            font-size: 24px;
+            font-size: 28px;
+            font-weight: 600;
         }
 
-        /* Form Container */
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: 500;
+            padding: 10px 15px;
+            border-radius: 6px;
+            background: #0056b3;
+            transition: background 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background: #004085;
+        }
+
         .form-container {
-            width: 90%;
-            max-width: 500px;
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            /* Gradient background */
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15), 0 2px 6px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
+            max-width: 600px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .form-container:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2), 0 4px 10px rgba(0, 0, 0, 0.15);
         }
 
         .form-container h2 {
             text-align: center;
+            font-size: 26px;
+            margin-bottom: 25px;
+            color: #007bff;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        form label {
+            display: block;
+            margin-top: 20px;
+            font-weight: 600;
             color: #333;
-            margin-bottom: 20px;
+            font-size: 14px;
+            letter-spacing: 0.5px;
         }
 
-        /* Form Styles */
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        input[type="text"], input[type="email"], input[type="password"], select {
+        form input,
+        form select {
             width: 100%;
-            padding: 8px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #28a745; /* Green background */
-            color: #ffffff;
-            border: none;
-            border-radius: 4px;
+            padding: 12px 15px;
+            margin-top: 8px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
             font-size: 16px;
+            color: #555;
+            background-color: #fafafa;
+            transition: border-color 0.3s, background-color 0.3s;
+        }
+
+        form input:focus,
+        form select:focus {
+            border-color: #007bff;
+            background-color: #fff;
+            outline: none;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
+        }
+
+        form button {
+            margin-top: 25px;
+            padding: 12px 18px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            background: linear-gradient(145deg, #007bff, #0056b3);
+            border: none;
+            border-radius: 8px;
             cursor: pointer;
+            transition: background 0.3s, box-shadow 0.3s;
         }
 
-        button:hover {
-            background-color: #218838; /* Darker green on hover */
+        form button:hover {
+            background: linear-gradient(145deg, #0056b3, #004085);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
 
-        a {
-            display: block;
-            text-align: center;
-            margin-top: 10px;
+        form a {
+            display: inline-block;
+            margin-top: 15px;
+            font-size: 14px;
+            font-weight: 500;
             color: #007bff;
             text-decoration: none;
+            transition: color 0.3s;
         }
 
-        a:hover {
+        form a:hover {
+            color: #0056b3;
             text-decoration: underline;
         }
     </style>
 </head>
+
 <body>
     <header>
-        <h1>HealthTrackAI</h1>
+        <h1>HealthTrackAI - Customer Management</h1>
+        <nav>
+            <ul>
+                <li><a href="admin.php">User List</a></li>
+                <li><a href="admin_doctor.php">Doctor List</a></li>
+                <li><a href="schedule_appointment.php">Appointments</a></li>
+                <li><a href="add_doctor.php">Add Doctor</a></li>
+                <li><a href="add_schedule_appointment.php" class="section-btn">Add Schedule Appointment</a></li>
+                <li><a href="index.php">Logout</a></li>
+            </ul>
+        </nav>
     </header>
 
     <div class="form-container">
@@ -190,4 +257,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
     </div>
 </body>
+
 </html>
